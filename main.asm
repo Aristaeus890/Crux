@@ -1,22 +1,24 @@
 
+.endinit
+cli
+ldy #0
+jsr entergamestate
 .mainloop
 	;use gamestate to index into a jump table
-	ldy gamestate
-	lda GameStatesLo, y 
-	sta jumppointer
-	lda GameStatesHi, y 
-	sta jumppointer+1
-	jsr JumpToPointerRoutine
-jmp mainloop ;repeat mainloop
+	lda #>mainloop
+	pha 
+	lda #<mainloop-1
+	pha
 
-.entergamestate ; new state in y 
-	sty gamestate
-	lda InitGameStatesLo, y 
-	sta jumppointer
-	lda InitGameStatesHi, y 
-	sta jumppointer+1
-	jsr JumpToPointerRoutine
+	ldy gamestate
+	lda GameStatesHi, y
+	pha 
+	lda GameStatesLo, y 
+	pha
 rts
+
+
+
 
 .GameStatePlaying
 	;start here, with buffer1 ($5800) displayed on the screen
@@ -27,35 +29,132 @@ rts
 	;draw to buffer 1
 	;flip display to buffer 1
 	;repeat
+		ldy #5
+		jsr SetPalette
+	jsr ReadKeyboard
 	jsr ClearBuffer1 ; clear all sprites from $5800 buffer
-	jsr ReadKeyboard ; load all keyboard input this frame
-	jsr ProcessEntities ; go to entity loop
+	jsr DefaultGameBehaviour
+		; ldy #0
+		; jsr SetPalette
 	jsr DrawToBuffer1 ; draw all entities to $5800 buffer
-	jsr ProcessStaticEntities
-	jsr CheckForMapChange ; check if we need to load a new screen
+		ldy #0
+		jsr SetPalette
 	lda #19:jsr osbyte ; wait for vsync
 	jsr FlipScreenBuffer ; swap from $5800 buffer to $3000
-
-	jsr ClearBuffer2
+		ldy #5
+		jsr SetPalette
 	jsr ReadKeyboard
-	jsr ProcessEntities
-	jsr ProcessStaticEntities
+	jsr ClearBuffer2
+	jsr DefaultGameBehaviour
+		; ldy #0
+		; jsr SetPalette
 	jsr DrawToBuffer2
-	jsr CheckForMapChange
+		ldy #0
+		jsr SetPalette
 	lda #19:jsr osbyte ; wait for vsync
 	jsr FlipScreenBuffer
-	
+	jmp GameStatePlaying
+;tailcall
+
+.GameStateDisplayingText
+	lda #128
+	jsr CheckKey
+	beq notextexit
+	jsr DrawMetaMetaTiles
+	jsr CopyBufferToBuffer
+	ldx #$ff
+	txs
+	lda #>mainloop
+	pha
+	lda #<mainloop-1
+	pha 
+	ldy #1
+	bpl entergamestate;tailcall
+	.notextexit
 rts
+
+.entergamestate ; new state in y 
+	sty gamestate
+	lda InitGameStatesHi, y 
+	pha
+	lda InitGameStatesLo, y 
+	pha
+	rts
+
 .GameStateTitle
+	jsr ReadKeyboard
+	lda #32
+	jsr CheckKey
+	beq NoTitleK
+	ldy #GAMESTATEPLAYING
+	bpl entergamestate ;always branch
+	.NoTitleK
 rts
+
+
+
 .GameStatePaused
+
 rts
+
 .InitGameStatePlaying
-
-rts
+	jmp ReloadScreen
+;tailcall
 .InitGameStateTitle
-
-rts
+	ldy #8
+	jmp PrintString
+;tailcall
 .InitGameStatePaused
 
+rts
+
+.InitGameStateDisplayingText
+rts
+
+.DefaultGameBehaviour
+		; ldy #1
+		; jsr SetPalette
+	jsr HandleEtank
+		; ldy #2
+		; jsr SetPalette
+	jsr UpdateUi
+		; ldy #4
+		; jsr SetPalette
+	jsr ProcessEntities
+		; ldy #5
+		; jsr SetPalette
+	jsr CheckForScreenExit
+		; ldy #3
+		; jsr SetPalette
+	jsr CheckForMapChange
+	jmp CleanUp
+;tailcall
+
+.HandleEtank
+	lda framecounter
+	bne NoEtanDec
+	lda ETank
+	sec 
+	sbc #1
+	sta ETank
+	lda ETank+1
+	sbc #0
+	sta ETank+1
+	.NoEtanDec
+
+	ldx #1
+	.TimerUnderFlowLoop
+		lda ETank, x 
+		bpl NoTimerUnderflow
+		lda #9
+		sta ETank, x 
+		.NoTimerUnderflow
+		dex 
+		bpl TimerUnderFlowLoop
+	;check for e-death 
+	lda ETank
+	ora ETank+1
+	bne NoEDeath
+	jmp Respawn
+	.NoEDeath
 rts
