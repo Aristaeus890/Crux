@@ -195,12 +195,6 @@ rts
   lda CollisionFuncsLo, y 
   pha 
   rts
-
-
-  ; ldx currententity
-  lda #$01
-  rts
-
   .SpriteCollideNextSprite
     iny 
     cpy #NUMENTITIES
@@ -209,6 +203,14 @@ rts
     sta scratch1
 rts
 
+.LoadExitCollision
+  lda #0
+  sta variable1
+  lda #$e0
+  sta variable2
+  lda #$01
+  jsr WriteToCollisionMap
+  rts
 
 .LoadCollisionData
   ;s1 = index into screen data 
@@ -350,6 +352,9 @@ rts
 .SpriteCollideKillPlayer
   jmp Respawn
 
+.SpriteCollideEGradual
+  jmp AddTankGradual
+
 .SpriteCollideETank
   ldy scratch1
   lda #0
@@ -386,14 +391,14 @@ rts
   lda #25 
   sta entitiesstate, y  
 
-  ; lda entitiesxpos, y 
-  ; sta variable1
-  ; lda entitiesypos, y 
-  ; sta variable2
-  ; lda #19
-  ; sta variable3
-  ; jsr CreateEntity
-
   lda #10
   sta entitiesanimationtimer, y 
   jmp PlayerEnterStateBouncing
+  ; .palcycle skip 1
+  ; equb %10101010,%10101010,%10101010,%10101010,%10101010,%10101010,%10101010,%10101010
+  ; equb %10101010,%10101010,%10101010,%10101010,%10101010,%10101010,%10101010,%10101010
+  ; equb %10101010,%10101010,%10101010,%10101010,%10101010,%10101010,%10101010,%10101010
+  ; equb %10101010,%10101010,%10101010,%10101010,%10101010,%10101010,%10101010,%10101010
+  ; equb %10101010,%10101010,%10101010,%10101010,%10101010,%10101010,%10101010,%10101010
+  ; equb %10101010,%10101010,%10101010,%10101010,%10101010,%10101010,%10101010,%10101010
+  ; equb %10101010,%10101010,%10101010,%10101010,%10101010,%10101010,%10101010,%10101010

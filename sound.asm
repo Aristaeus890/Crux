@@ -1,26 +1,28 @@
 
 
 .PlaySound
-  ;sound to play in v1
+  ;sound to play in y
   ;osword call returns undefined registers, so store them here
   txa 
   pha
-  tya
-  pha
+  ; tya
+  ; pha
 
-  ldy variable1
+  ; ldy variable1
   lda SoundListLo, y 
-  sta scratch1
+  tax
+  ; sta scratch1
   lda SoundListHi, y 
-  sta scratch2
+  tay
+  ; sta scratch2
 
   lda #OSWORDSOUND
-  ldx scratch1
-  ldy scratch2
+  ; ldx scratch1
+  ; ldy scratch2
   jsr osword
 
-  pla 
-  tay
+  ; pla 
+  ; tay
   pla 
   tax
 rts

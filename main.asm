@@ -1,4 +1,5 @@
 
+;entry point after all initialisation is done
 .endinit
 cli
 ldy #0
@@ -29,36 +30,43 @@ rts
 	;draw to buffer 1
 	;flip display to buffer 1
 	;repeat
-		ldy #5
-		jsr SetPalette
+	; ldy #5
+	; jsr SetPalette
+	; lda framecounter
+	; cmp #10
+	; bne nocycle
+	; lda #$00
+	; sta framecounter
+	; jsr cyclepal
+	; .nocycle
 	jsr ReadKeyboard
 	jsr ClearBuffer1 ; clear all sprites from $5800 buffer
 	jsr DefaultGameBehaviour
-		; ldy #0
-		; jsr SetPalette
 	jsr DrawToBuffer1 ; draw all entities to $5800 buffer
-		ldy #0
-		jsr SetPalette
+	; ldy #0
+	; jsr SetPalette
 	lda #19:jsr osbyte ; wait for vsync
 	jsr FlipScreenBuffer ; swap from $5800 buffer to $3000
-		ldy #5
-		jsr SetPalette
+
+	; ldy #5
+	; jsr SetPalette
 	jsr ReadKeyboard
 	jsr ClearBuffer2
 	jsr DefaultGameBehaviour
-		; ldy #0
-		; jsr SetPalette
 	jsr DrawToBuffer2
-		ldy #0
-		jsr SetPalette
+	; ldy #0
+	; jsr SetPalette
 	lda #19:jsr osbyte ; wait for vsync
 	jsr FlipScreenBuffer
 	jmp GameStatePlaying
 ;tailcall
 
 .GameStateDisplayingText
-	lda #128
-	jsr CheckKey
+	; If return pressed:
+	;	Redraw Screen
+	;	Reset Stack and gamestate 
+	lda #KEYRETURN
+	jsr CheckKeyPressed
 	beq notextexit
 	jsr DrawMetaMetaTiles
 	jsr CopyBufferToBuffer
@@ -82,9 +90,12 @@ rts
 	rts
 
 .GameStateTitle
+	inc seed
+	jsr prng 
+	sta seed+1
 	jsr ReadKeyboard
-	lda #32
-	jsr CheckKey
+	lda #KEYL
+	jsr CheckKeyPressed
 	beq NoTitleK
 	ldy #GAMESTATEPLAYING
 	bpl entergamestate ;always branch
@@ -101,7 +112,7 @@ rts
 	jmp ReloadScreen
 ;tailcall
 .InitGameStateTitle
-	ldy #8
+	ldy #5
 	jmp PrintString
 ;tailcall
 .InitGameStatePaused
@@ -123,14 +134,16 @@ rts
 	jsr ProcessEntities
 		; ldy #5
 		; jsr SetPalette
+	; rts
 	jsr CheckForScreenExit
 		; ldy #3
 		; jsr SetPalette
-	jsr CheckForMapChange
+	; jsr CheckForMapChange
 	jmp CleanUp
 ;tailcall
 
 .HandleEtank
+rts
 	lda framecounter
 	bne NoEtanDec
 	lda ETank

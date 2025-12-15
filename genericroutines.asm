@@ -4,7 +4,6 @@
 .JumpToPointerRoutine:
     jmp (jumppointer)
 
-
 .FlipScreenBuffer
     lda bufferflag
     bne FlipBuffer2
@@ -13,11 +12,7 @@
     sta currentbuffer+1
     lda #$00
     sta currentbuffer    
-
-    ; lda #216
-    ; and #%00111111
     ldy #%00011000
-    ; tay
     lda viewmem
     beq setbuffertomem1
     ldy #4
@@ -118,15 +113,25 @@ rts
     asl a
 rts
 
+.CorruptTile
+    lda #$00
+    sta scratch1
+
+    jsr prng
+    and #$01
+    clc 
+    adc #$09
+
+    sta scratch2
+
+    jsr prng 
+    tay 
+    eor (scratch1), y
+    sta (scratch1), y 
+    jsr prng
+rts
+
 .ReverseBitOrder
-;     sta temp
-;     ldy #$08
-;     .ReverseBitOrderLoop
-;     lsr temp
-;     rol a
-;     dey
-;     bne ReverseBitOrderLoop
-; rts
   sta temp
 
   lsr temp
@@ -226,14 +231,9 @@ rts
     sta scratch1
 rts
 
-
-
-; .AbsoluteValue ; value in a 
-; ldx #$01
-; .abs1:
-; inx		
-; .absloop:
-; lsr	a
-; bcs	 abs1
-; bne	 absloop 
-; rts
+.Reset
+    lda #$01
+    sta bufferflag
+    ldx #$ff
+    txs 
+    jmp mainloop

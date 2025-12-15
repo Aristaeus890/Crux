@@ -21,7 +21,7 @@ include "constants.asm"
 ; a0-a7 current nmi owner (see paged roms 15.3.2)
 ;a8-af = os commands
 ;bo-bf = filing system scratch (should be usable)
-;c0-cf = filing system. Should be usable if e aren't paging roms
+;c0-cf = filing system. Should be usable if we aren't paging roms
 ;d0-e1 = vdu driver - unclear
 ;e2-eb = cassette - usable
 
@@ -35,6 +35,8 @@ guard &a0
 .entitiesvylo skip 10
 .entitiesxpos skip 10
 .entitiesypos skip 10
+.entitiesstate skip 10
+.entitiestype skip 10
 .seed skip 2
 .drawaddress skip 2
 .drawaddress2 skip 2
@@ -46,8 +48,6 @@ guard &a0
 .jumpstrengthlo skip 1
 .currententity skip 1
 .temp skip 1 
-.keys skip 1
-.keysflag skip 1
 .targetbuffer skip 1
 .bufferflag skip 1
 .extraloopcounter1 skip 1
@@ -56,6 +56,7 @@ guard &a0
 .lastycollision skip 1
 .drawoffset skip 2
 .drawoffsetlastframe skip 2
+
 .scratch1 skip 1
 .scratch2 skip 1
 .scratch3 skip 1
@@ -80,6 +81,8 @@ guard &a0
 .framecounter skip 1
 .operatingxpos skip 1
 .operatingypos skip 1
+.keyslastframe skip 1
+.keysthisframe skip 1 ;117
 
 ;;;;;;
 ;page 3
@@ -101,25 +104,26 @@ ORG $400
 .entitiesanimationaddresshi skip 10
 .entitiesanimationtimermax skip 10
 .entitiesanimationtimer skip 10
-.entitiestype skip 10
 .entitiesxposlo skip 10
 .entitiesyposlo skip 10
 .entitiesxposlastframe skip 10;
 .entitiesyposlastframe skip 10;
 .entitiesdrawposlo skip 10
 .entitiesdrawposhi skip 10
-.entitiesdrawposlolastframe skip 10;
 ;500
+.entitiesdrawposlolastframe skip 10;
 .entitiesdrawposhilastframe skip 10;
-.entitiesstate skip 10
+
 .entitieswidth skip 10 
 .entitiesheight skip 10 
-.entitiescollision skip 10
+; .entitiescollision skip 10
 .entitiesredraw skip 10
 .entitiesstatic skip 10
+.MapChangeFunctionsLo skip 5
+.MapChangeFunctionsHi skip 5
 .currentterminal skip 1
 
-.allowedjumps skip 1
+; .allowedjumps skip 1
 .gamestate skip 1
 
 .waction skip 1 
@@ -141,8 +145,9 @@ org $500
 org $600
 .collisionmap skip 256
 org $700
-.MetaMetaTileListLo skip 128
-.MetaMetaTileListHi skip 128
+.MetaMetaTileListLo skip 64
+.MetaMetaTileListHi skip 64
+.ScreenExitData skip 128
 ;;;;;
 ;;page 8: Sound
 ;;;;;
@@ -224,7 +229,6 @@ org $0a00 ; tile page 2
   .TilePatternBrick4 skip 8
   .TilePatternBrick5 skip 8
   .TilePatternBrick6 skip 8
-
 org $0b00
 .MetaColumnMap skip 256
 org $0c00 ; sprites p1
@@ -264,8 +268,6 @@ org $0d00 ; 1 sprite, rest pointer lists
   .DummySpriteToStopBug skip 8
   .MapListLo skip 64 
   .MapListHi skip 64
-  .MapChangeFunctionsLo skip 5
-  .MapChangeFunctionsHi skip 5
   .StaticCrystal1 skip 8
   .StaticCrystal2 skip 8
   .StaticDoor1 skip 8
@@ -278,11 +280,13 @@ org $0d00 ; 1 sprite, rest pointer lists
   .StaticDoor8 skip 8
   .InvisPlatform skip 8
   .VisPlatform skip 8
+  .StaticTorch1 skip 8
+  .StaticTorch2 skip 8
 guard $2fff
 ORG &e00  ; we don't use basic so we can overwrite all memory from her to oshwm
 .init
-
 include "data.asm"
+include "pointers.asm"
 include "main.asm"
 include "entities.asm"
 include "draw.asm"
@@ -300,3 +304,4 @@ include "relocate.asm"
 .end
 ;save name, start position, end position (program counter), program launch address
 save "game", init, *,InitOverWrite
+

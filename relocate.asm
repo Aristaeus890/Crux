@@ -10,23 +10,26 @@
 org &3000
 guard &5800
 
+; .MetaColumnMapReloc2
+;   equb %000000_00,%0000_0000,%00_000000
+
 .MetaColumnMapReloc
-  equb $00,$01,$02,$03,$04,$05,$06,$07,$08,$09,$0a,$0b,$0c,$0d,$0e,$0f
-  equb $10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$1a,$1b,$1c,$1d,$1e,$1f
-  equb $20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$2a,$2b,$2c,$2d,$2e,$2f
-  equb $30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$3a,$3b,$3c,$3d,$3e,$3f
-  equb $00,$01,$02,$03,$04,$05,$06,$07,$08,$09,$0a,$0b,$0c,$0d,$0e,$0f
-  equb $10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$1a,$1b,$1c,$1d,$1e,$1f
-  equb $20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$2a,$2b,$2c,$2d,$2e,$2f
-  equb $30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$3a,$3b,$3c,$3d,$3e,$3f
-  equb $00,$01,$02,$03,$04,$05,$06,$07,$08,$09,$0a,$0b,$0c,$0d,$0e,$0f
-  equb $10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$1a,$1b,$1c,$1d,$1e,$1f
-  equb $20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$2a,$2b,$2c,$2d,$2e,$2f
-  equb $30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$3a,$3b,$3c,$3d,$3e,$3f
-  equb $00,$01,$02,$03,$04,$05,$06,$07,$08,$09,$0a,$0b,$0c,$0d,$0e,$0f
-  equb $10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$1a,$1b,$1c,$1d,$1e,$1f
-  equb $20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$2a,$2b,$2c,$2d,$2e,$2f
-  equb $30,$31,$32,$33,$34,$35,$36,$37,$38,$39,$3a,$3b,$3c,$3d,$3e,$3f
+  equb $05,$06,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10
+  equb $10,$07,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10
+  equb $10,$07,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10
+  equb $39,$1f,$01,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10
+  equb $30,$11,$0b,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10
+  equb $10,$39,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10
+  equb $10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10
+  equb $10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10
+  equb $10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10
+  equb $10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10
+  equb $10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10
+  equb $10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10
+  equb $10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10
+  equb $10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10
+  equb $10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10
+  equb $10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10,$10
 
 align &100
 .SpritePage1
@@ -122,13 +125,13 @@ align &100
   equb %00000000
 .SpritePlayerFalling2Reloc
   equb %00000000
-  equb %00011000
-  equb %00011000
   equb %00000000
-  equb %01111110
-  equb %00011000
-  equb %00111100
-  equb %00100100
+  equb %00000000
+  equb %00000000
+  equb %00000000
+  equb %00000000
+  equb %00101000
+  equb %00011110
 .SpritePlayerWallSlidingReloc
   equb %00000000
   equb %00000010
@@ -156,23 +159,22 @@ align &100
   equb %00000100
   equb %00111010
   equb %00000000
-;;;
 .SPProjectileRight1Reloc
   equb %00000000
-  equb %00000000
-  equb %00000000
+  equb %00100000
+  equb %00010000
   equb %00011000
   equb %00011000
-  equb %00000000
-  equb %00000000
+  equb %00001000
+  equb %00000100
   equb %00000000
 .SPProjectileRight2Reloc
   equb %00000000
   equb %00000000
-  equb %00011000
-  equb %00100100
-  equb %00100100
-  equb %00011000
+  equb %00000000
+  equb %01111000
+  equb %00011110
+  equb %00000000
   equb %00000000
   equb %00000000
 .SPProjectileUp1Reloc
@@ -334,157 +336,145 @@ align &100
   equb %00010000
 
 .MapListLoReloc ;64 bytes
-  equb <Screen0;$00
-  equb <Screen1;$01
-  equb <Screen2;$02
-  equb <Screen3;$03
-  equb <Screen4;$04
-  equb <Screen5;$05
-  equb <Screen6;$06
-  equb <Screen7;$07
-  equb <Screen8;$08
-  equb <Screen9;$09
-  equb <Screen10;$0a
-  equb <Screen11;$0b
-  equb <Screen12;$0c
-  equb <Screen13;$0d
-  equb <Screen14;$0e
-  equb <Screen15;$0f
+  equb <Screen1_1;$00
+  equb <Screen1_2;$01
+  equb <Screen1_3;$02
+  equb <Screen1_4;$03
+  equb <Screen1_5;$04
+  equb <Screen1_6;$05
+  equb <Screen1_7;$06
+  equb <Screen1_8;$07
+  equb <Screen2_1;$08
+  equb <Screen2_2 ;$09
+  equb <Screen2_3 ;$0a
+  equb <Screen2_4 ;$0b
+  equb <Screen2_5 ;$0c
+  equb <Screen2_6 ;$0d
+  equb <Screen2_7;$0e
+  equb <Screen2_8;$0f
 
-  equb <Screen16
-  equb <Screen17
-  equb <Screen18
-  equb <Screen19
-  equb <Screen20
-  equb <Screen21
-  equb <Screen22
-  equb <Screen23
-  equb <Screen24
-  equb <Screen25
-  equb <Screen26
-  equb <Screen27
-  equb <Screen28
-  equb <Screen29
-  equb <Screen30
-  equb <Screen31
+  equb <Screen3_1 ;10
+  equb <Screen3_2 ;11
+  equb <Screen3_3 ;12
+  equb <Screen3_4 ;13
+  equb <Screen3_5 ;14
+  equb <Screen3_6 ;15
+  equb <Screen3_7 ;16
+  equb <Screen3_8 ;17
+  equb <Screen4_1 ;18
+  equb <Screen4_2 ;19
+  equb <Screen4_3 ;1a
+  equb <Screen4_4 ;1b
+  equb <Screen4_5 ;1c
+  equb <Screen4_6 ;1d
+  equb <Screen4_7 ;1e
+  equb <Screen4_8 ;1f
 
-  equb <Screen32
-  equb <Screen33
-  equb <Screen34
-  equb <Screen35
-  equb <Screen36
-  equb <Screen37
-  equb <Screen38
-  equb <Screen39
-  equb <Screen40
-  equb <Screen41
-  equb <Screen42
-  equb <Screen43
-  equb <Screen44
-  equb <Screen45
-  equb <Screen46
-  equb <Screen47
+  equb <Screen5_1 ;20
+  equb <Screen5_2 ;21
+  equb <Screen5_3 ;22
+  equb <Screen5_4 ;23
+  equb <Screen5_5 ;24
+  equb <Screen5_6 ;25
+  equb <Screen5_7 ;26
+  equb <Screen5_8 ;27
+  equb <Screen6_1 ;28
+  equb <Screen6_2 ;29
+  equb <Screen6_3 ;2a
+  equb <Screen6_4 ;2b
+  equb <Screen6_5 ;2c
+  equb <Screen6_6 ;2d
+  equb <Screen6_7 ;2e
+  equb <Screen6_8 ;2f
 
-  equb <Screen48
-  equb <Screen49
-  equb <Screen50
-  equb <Screen51
-  equb <Screen52
-  equb <Screen53
-  equb <Screen54
-  equb <Screen55
-  equb <Screen56
-  equb <Screen57
-  equb <Screen58
-  equb <Screen59
-  equb <Screen60
-  equb <Screen61
-  equb <Screen62
-  equb <Screen63
+  equb <Screen7_1
+  equb <Screen7_2
+  equb <Screen7_3
+  equb <Screen7_4
+  equb <Screen7_5
+  equb <Screen7_6
+  equb <Screen7_7
+  equb <Screen7_8
+  equb <Screen8_1
+  equb <Screen8_2
+  equb <Screen8_3
+  equb <Screen8_4
+  equb <Screen8_5
+  equb <Screen8_6
+  equb <Screen8_7
+  equb <Screen8_8
 
 .MapListHiReloc ;64 bytes
-  equb >Screen0
-  equb >Screen1
-  equb >Screen2
-  equb >Screen3
-  equb >Screen4
-  equb >Screen5
-  equb >Screen6
-  equb >Screen7
-  equb >Screen8
-  equb >Screen9
-  equb >Screen10
-  equb >Screen11
-  equb >Screen12
-  equb >Screen13
-  equb >Screen14
-  equb >Screen15
+  equb >Screen1_1;$00
+  equb >Screen1_2;$01
+  equb >Screen1_3;$02
+  equb >Screen1_4;$03
+  equb >Screen1_5;$04
+  equb >Screen1_6;$05
+  equb >Screen1_7;$06
+  equb >Screen1_8;$07
+  equb >Screen2_1;$08
+  equb >Screen2_2 ;$09
+  equb >Screen2_3 ;$0a
+  equb >Screen2_4 ;$0b
+  equb >Screen2_5 ;$0c
+  equb >Screen2_6 ;$0d
+  equb >Screen2_7;$0e
+  equb >Screen2_8;$0f
 
-  equb >Screen16
-  equb >Screen17
-  equb >Screen18
-  equb >Screen19
-  equb >Screen20
-  equb >Screen21
-  equb >Screen22
-  equb >Screen23
-  equb >Screen24
-  equb >Screen25
-  equb >Screen26
-  equb >Screen27
-  equb >Screen28
-  equb >Screen29
-  equb >Screen30
-  equb >Screen31
+  equb >Screen3_1
+  equb >Screen3_2
+  equb >Screen3_3
+  equb >Screen3_4
+  equb >Screen3_5
+  equb >Screen3_6
+  equb >Screen3_7
+  equb >Screen3_8
+  equb >Screen4_1
+  equb >Screen4_2
+  equb >Screen4_3
+  equb >Screen4_4
+  equb >Screen4_5
+  equb >Screen4_6
+  equb >Screen4_7
+  equb >Screen4_8
 
-  equb >Screen32
-  equb >Screen33
-  equb >Screen34
-  equb >Screen35
-  equb >Screen36
-  equb >Screen37
-  equb >Screen38
-  equb >Screen39
-  equb >Screen40
-  equb >Screen41
-  equb >Screen42
-  equb >Screen43
-  equb >Screen44
-  equb >Screen45
-  equb >Screen46
-  equb >Screen47
+  equb >Screen5_1
+  equb >Screen5_2
+  equb >Screen5_3
+  equb >Screen5_4
+  equb >Screen5_5
+  equb >Screen5_6
+  equb >Screen5_7
+  equb >Screen5_8
+  equb >Screen6_1
+  equb >Screen6_2
+  equb >Screen6_3
+  equb >Screen6_4
+  equb >Screen6_5
+  equb >Screen6_6
+  equb >Screen6_7
+  equb >Screen6_8
 
-  equb >Screen48
-  equb >Screen49
-  equb >Screen50
-  equb >Screen51
-  equb >Screen52
-  equb >Screen53
-  equb >Screen54
-  equb >Screen55
-  equb >Screen56
-  equb >Screen57
-  equb >Screen58
-  equb >Screen59
-  equb >Screen60
-  equb >Screen61
-  equb >Screen62
-  equb >Screen63
-;128
+  equb >Screen7_1
+  equb >Screen7_2
+  equb >Screen7_3
+  equb >Screen7_4
+  equb >Screen7_5
+  equb >Screen7_6
+  equb >Screen7_7
+  equb >Screen7_8
+  equb >Screen8_1
+  equb >Screen8_2
+  equb >Screen8_3
+  equb >Screen8_4
+  equb >Screen8_5
+  equb >Screen8_6
+  equb >Screen8_7
+  equb >Screen8_8
 
-.MapChangeFunctionsLoReloc
-  equb <MapChangeNone-1
-  equb <MapChangeRight-1
-  equb <MapChangeLeft-1
-  equb <MapChangeDown-1
-  equb <MapChangeUp-1
 
-.MapChangeFunctionsHiReloc
-  equb >MapChangeNone
-  equb >MapChangeRight
-  equb >MapChangeLeft
-  equb >MapChangeDown
-  equb >MapChangeUp
+
 
 .StaticCrystal1Reloc
   equw TilePatternCrystal1,TilePatternCrystal2
@@ -522,8 +512,16 @@ align &100
 .VisPlatformReloc
   equw TilePatternSolidEdge1, TilePatternSolidEdge2
   equw TilePatternSolidEdge3, TilePatternSolidEdge4
-  
-  equb 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+.StaticTorch1Reloc
+  equw TilePatternTorchBig1
+  equw TilePatternTorchBig2
+  equw TilePatternTorchBig3
+  equw TilePatternTorchBig4
+.StaticTorch2Reloc
+  equw TilePatternTorchBig5
+  equw TilePatternTorchBig6
+  equw TilePatternTorchBig7
+  equw TilePatternTorchBig8
   equb 0,0,0,0,0,0
 
 
@@ -997,23 +995,23 @@ align &100
   equb %10000000
 
 .TilePatternRelocChain1
-  equb %00100010
-  equb %01010101
-  equb %01010101
-  equb %00100010
-  equb %01010101
-  equb %01010101
-  equb %00100010
-  equb %01010000
+  equb %10011001
+  equb %11111111
+  equb %11101111
+  equb %11001111
+  equb %10000001
+  equb %10000001
+  equb %11001111
+  equb %11101111
 .TilePatternRelocChain2
-  equb %01010000
-  equb %00100000
-  equb %01010000
-  equb %01010000
-  equb %00100000
-  equb %01010000
-  equb %01010000
-  equb %00100000
+  equb %10011001
+  equb %11111111
+  equb %11110111
+  equb %11110011
+  equb %10000001
+  equb %10000001
+  equb %11110011
+  equb %11110111
 .TilePatternRelocChain3
   equb %00100000
   equb %01010000
@@ -1125,9 +1123,19 @@ align &100
 
 ;;;END TILE PATTERNS
 
+.MapChangeFunctionsLoReloc
+  equb <MapChangeNone-1
+  equb <MapChangeRight-1
+  equb <MapChangeLeft-1
+  equb <MapChangeDown-1
+  equb <MapChangeUp-1
 
-
-;likely can be eliminated with some slower maths
+.MapChangeFunctionsHiReloc
+  equb >MapChangeNone
+  equb >MapChangeRight
+  equb >MapChangeLeft
+  equb >MapChangeDown
+  equb >MapChangeUp
 .CalcM64loReloc
   equb $00,$40,$80,$c0
   equb $00,$40,$80,$c0
@@ -1137,7 +1145,6 @@ align &100
   equb $00,$40,$80,$c0
   equb $00,$40,$80,$c0
   equb $00,$40,$80,$c0
-;likely can be eliminated with some slower maths
 .CalcM64hiReloc
   equb $00,$00,$00,$00
   equb $01,$01,$01,$01
@@ -1149,44 +1156,44 @@ align &100
   equb $07,$07,$07,$07
 
 .MetaMetaTileListLoReloc
-  equb <MMTFloor16Earth;0
-  equb <MMTFloor16Solid;1
-  equb <MMTFloor14Earth;2
-  equb <MMTFloor14Solid;3
-  equb <MMTFloor12Earth;4
-  equb <MMTFloor12Solid;5
-  equb <MMTFloor10Earth;6
-  equb <MMTFloor10Solid;7
-  equb <MMTFloor8Earth ;8
-  equb <MMTFloor8Solid;9
-  equb <MMTFloor6Earth;10
-  equb <MMTFloor6Solid;11
-  equb <MMTFloor4Earth;12
-  equb <MMTFloor4Solid;13
-  equb <MMTFloor2Earth;14
-  equb <MMTFloor2Solid;15
-  equb <MMTFWallEarthLeft16;16
-  equb <MMTFWallEarthRight16;17
-  equb <MMTFWallSolid16;18
-  equb <MMTFCeilingEarth16;19
-  equb <MMTSolid1x1;20
-  equb <MMTRounded1x1;21
-  equb <MMTRounded1x3;22
-  equb <MMTHPlatforms;23
-  equb <MMTBrickDownFace1x16;24
-  equb <MMTBrickUpFace1x16;25
-  equb <MMTBrickLeftFace1x16;26
-  equb <MMTBrickRightFace1x16;27
-  equb <MMTFloor16Earth;28
-  equb <MMTFloor16Earth;29
-  equb <MMTFloor16Earth;30
-  equb <MMTFloor16Earth;31
+  equb <mmtfBrickWallL;0
+  equb <mmtfBrickWallR;1
+  equb <mmtfBlankWall1;2
+  equb <mmtfBlankWall16;3
+  equb <mmtfFlatWall2;4
+  equb <mmtfFlatWall4;5
+  equb <mmtfFlatWall8;6
+  equb <mmtfFlatWall16;7
+  equb <mmtfFlatFloor1;8
+  equb <mmtfFlatFloor2;9
+  equb <mmtfFlatFloor4;10
+  equb <mmtfFlatFloor8;11
+  equb <mmtfFlatFloor16 ;12
+  equb <mmtfBrickFloor16;13
+  equb <mmtfEarthFloor16;14
+  equb <mmtfBlankFloor1;15
+  equb <mmtfBlankFloor2;16
+  equb <mmtfBlankFloor4;17
+  equb <mmtfBlankFloor5;18
+  equb <mmtfBlankFloor8;19
+  equb <mmtfBlankFloor16;20
+  equb <mmtStepTopL;21
+  equb <mmtStepTopR;22
+  equb <mmtfConveyerLeft16;23
+  equb <mmtfConveyerRight16;24
+  equb <mmtfConveyerLeft8;25
+  equb <mmtfConveyerRight8;26
+  equb <mmtfConveyerLeft4;27
+  equb <mmtfConveyerRight4;28
+  equb <mmtfConveyerLeft2;29
+  equb <mmtfConveyerRight2;30
+  equb <mmtfBounce1;31
 
-  equb <MMTFloor16Earth ;32
-  equb <MMTFloor16Earth ;33
-  equb <MMTFloor16Earth ;34
-  equb <MMTFloor16Earth ;35
-  equb <MMTFloor16Earth ;36
+  equb <mmtfBounce2;32
+  equb <mmtfBlankWall2 ;33
+  equb <mmtfBlankWall4 ;34
+  equb <mmtfBlankWall8 ;35
+  equb <mmtfBrickCeiling16 ;36
   equb <MMTFloor16Earth ;37
   equb <MMTFloor16Earth ;38
   equb <MMTFloor16Earth ;39
@@ -1215,115 +1222,45 @@ align &100
   equb <MMTFloor16Earth ;62
   equb <MMTFloor16Earth ;63
 
-
-  equb <MMTFloor16Earth ;64
-  equb <MMTFloor16Earth ;65
-  equb <MMTFloor16Earth ;6
-  equb <MMTFloor16Earth ;67
-  equb <MMTFloor16Earth ;68
-  equb <MMTFloor16Earth ;669
-  equb <MMTFloor16Earth ;70
-  equb <MMTFloor16Earth ;71
-  equb <MMTFloor16Earth ;72
-  equb <MMTFloor16Earth ;73
-  equb <MMTFloor16Earth ;74
-  equb <MMTFloor16Earth ;75
-  equb <MMTFloor16Earth ;76
-  equb <MMTFloor16Earth ;77
-  equb <MMTFloor16Earth ;78
-  equb <MMTFloor16Earth ;79
-  equb <MMTFloor16Earth ;80
-  equb <MMTFloor16Earth ;81
-  equb <MMTFloor16Earth ;82
-  equb <MMTFloor16Earth ;83
-  equb <MMTFloor16Earth ;84
-  equb <MMTFloor16Earth ;85
-  equb <MMTFloor16Earth ;86
-  equb <MMTFloor16Earth ;87
-  equb <MMTFloor16Earth ;88
-  equb <MMTFloor16Earth ;89
-  equb <MMTFloor16Earth ;90
-  equb <MMTFloor16Earth ;91
-  equb <MMTFloor16Earth ;91
-  equb <MMTFloor16Earth ;93
-  equb <MMTFloor16Earth ;94
-  equb <MMTFloor16Earth ;95
-
-
-  equb <MMTFloor16Earth ;96
-  equb <MMTFloor16Earth ;97
-  equb <MMTFloor16Earth ;98
-  equb <MMTFloor16Earth ;99
-  equb <MMTFloor16Earth ;100
-  equb <MMTFloor16Earth ;101
-  equb <MMTFloor16Earth ;102
-  equb <MMTFloor16Earth ;103
-  equb <MMTFloor16Earth ;104
-  equb <MMTFloor16Earth ;105
-  equb <MMTFloor16Earth ;106
-  equb <MMTFloor16Earth ;107
-  equb <MMTFloor16Earth ;108
-  equb <MMTFloor16Earth ;109
-  equb <MMTFloor16Earth ;110
-  equb <MMTFloor16Earth ;111
-  equb <MMTFloor16Earth ;112
-  equb <MMTFloor16Earth ;112
-  equb <MMTFloor16Earth ;114
-  equb <MMTFloor16Earth ;115
-  equb <MMTFloor16Earth ;116
-  equb <MMTFloor16Earth ;117
-  equb <MMTFloor16Earth ;118
-  equb <MMTFloor16Earth ;119
-  equb <MMTFloor16Earth ;120
-  equb <MMTFloor16Earth ;121
-  equb <MMTFloor16Earth ;122
-  equb <MMTFloor16Earth ;123
-  equb <MMTFloor16Earth ;124
-  equb <MMTFloor16Earth ;125
-  equb <MMTFloor16Earth ;126
-  equb <MMTFloor16Earth ;127
-
-
-
 .MetaMetaTileListHiReloc
-  equb >MMTFloor16Earth;0
-  equb >MMTFloor16Solid;1
-  equb >MMTFloor14Earth;2
-  equb >MMTFloor14Solid;3
-  equb >MMTFloor12Earth;4
-  equb >MMTFloor12Solid;5
-  equb >MMTFloor10Earth;6
-  equb >MMTFloor10Solid;7
-  equb >MMTFloor8Earth ;8
-  equb >MMTFloor8Solid;9
-  equb >MMTFloor6Earth;10
-  equb >MMTFloor6Solid;11
-  equb >MMTFloor4Earth;12
-  equb >MMTFloor4Solid;13
-  equb >MMTFloor2Earth;14
-  equb >MMTFloor2Solid;15
-  equb >MMTFWallEarthLeft16;16
-  equb >MMTFWallEarthRight16;17
-  equb >MMTFWallSolid16;18
-  equb >MMTFCeilingEarth16;19
-  equb >MMTSolid1x1;20
-  equb >MMTRounded1x1;21
-  equb >MMTRounded1x3;22
-  equb >MMTHPlatforms;23
-  equb >MMTBrickDownFace1x16;24
-  equb >MMTBrickUpFace1x16;25
-  equb >MMTBrickLeftFace1x16;26
-  equb >MMTBrickRightFace1x16;27
-  equb >MMTFloor16Earth;28
-  equb >MMTFloor16Earth;29
-  equb >MMTFloor16Earth;30
-  equb >MMTFloor16Earth;31
+  equb >mmtfBrickWallL;0
+  equb >mmtfBrickWallR;1
+  equb >mmtfBlankWall1;2
+  equb >mmtfBlankWall16;3
+  equb >mmtfFlatWall2;4
+  equb >mmtfFlatWall4;5
+  equb >mmtfFlatWall8;6
+  equb >mmtfFlatWall16;7
+  equb >mmtfFlatFloor1;8
+  equb >mmtfFlatFloor2;9
+  equb >mmtfFlatFloor4;10
+  equb >mmtfFlatFloor8;11
+  equb >mmtfFlatFloor16 ;12
+  equb >mmtfBrickFloor16;13
+  equb >mmtfEarthFloor16;14
+  equb >mmtfBlankFloor1;15
+  equb >mmtfBlankFloor2;16
+  equb >mmtfBlankFloor4;17
+  equb >mmtfBlankFloor5;18
+  equb >mmtfBlankFloor8;19
+  equb >mmtfBlankFloor16;20
+  equb >mmtStepTopL;21
+  equb >mmtStepTopR;22
+  equb >mmtfConveyerLeft16;23
+  equb >mmtfConveyerRight16;24
+  equb >mmtfConveyerLeft8;25
+  equb >mmtfConveyerRight8;26
+  equb >mmtfConveyerLeft4;27
+  equb >mmtfConveyerRight4;28
+  equb >mmtfConveyerLeft2;29
+  equb >mmtfConveyerRight2;30
+  equb >mmtfBounce1;31
 
-  equb >MMTFloor16Earth ;32
-  equb >MMTFloor16Earth ;33
-  equb >MMTFloor16Earth ;34
-  equb >MMTFloor16Earth ;35
-  equb >MMTFloor16Earth ;36
+  equb >mmtfBounce2;32
+  equb >mmtfBlankWall2 ;33
+  equb >mmtfBlankWall4 ;34
+  equb >mmtfBlankWall8 ;35
+  equb >mmtfBrickCeiling16 ;36
   equb >MMTFloor16Earth ;37
   equb >MMTFloor16Earth ;38
   equb >MMTFloor16Earth ;39
@@ -1353,72 +1290,27 @@ align &100
   equb >MMTFloor16Earth ;63
 
 
-  equb >MMTFloor16Earth ;64
-  equb >MMTFloor16Earth ;65
-  equb >MMTFloor16Earth ;6
-  equb >MMTFloor16Earth ;67
-  equb >MMTFloor16Earth ;68
-  equb >MMTFloor16Earth ;669
-  equb >MMTFloor16Earth ;70
-  equb >MMTFloor16Earth ;71
-  equb >MMTFloor16Earth ;72
-  equb >MMTFloor16Earth ;73
-  equb >MMTFloor16Earth ;74
-  equb >MMTFloor16Earth ;75
-  equb >MMTFloor16Earth ;76
-  equb >MMTFloor16Earth ;77
-  equb >MMTFloor16Earth ;78
-  equb >MMTFloor16Earth ;79
-  equb >MMTFloor16Earth ;80
-  equb >MMTFloor16Earth ;81
-  equb >MMTFloor16Earth ;82
-  equb >MMTFloor16Earth ;83
-  equb >MMTFloor16Earth ;84
-  equb >MMTFloor16Earth ;85
-  equb >MMTFloor16Earth ;86
-  equb >MMTFloor16Earth ;87
-  equb >MMTFloor16Earth ;88
-  equb >MMTFloor16Earth ;89
-  equb >MMTFloor16Earth ;90
-  equb >MMTFloor16Earth ;91
-  equb >MMTFloor16Earth ;91
-  equb >MMTFloor16Earth ;93
-  equb >MMTFloor16Earth ;94
-  equb >MMTFloor16Earth ;95
+.ScreenExitsReloc ;128 bytes
+  ;each byte is 2 rooms l->r. Each 4 bits is u/d/l/r indicating blocking an exit
+  equb %0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000
+  equb %0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000
+  equb %0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000
+  equb %0000_1000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000
+  equb %0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000
+  equb %0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000
+  equb %0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000
+  equb %0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000
+
+  equb %0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000
+  equb %0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000
+  equb %0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000
+  equb %0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000
+  equb %0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000
+  equb %0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000
+  equb %0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000
+  equb %0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000,%0000_0000
 
 
-  equb >MMTFloor16Earth ;96
-  equb >MMTFloor16Earth ;97
-  equb >MMTFloor16Earth ;98
-  equb >MMTFloor16Earth ;99
-  equb >MMTFloor16Earth ;100
-  equb >MMTFloor16Earth ;101
-  equb >MMTFloor16Earth ;102
-  equb >MMTFloor16Earth ;103
-  equb >MMTFloor16Earth ;104
-  equb >MMTFloor16Earth ;105
-  equb >MMTFloor16Earth ;106
-  equb >MMTFloor16Earth ;107
-  equb >MMTFloor16Earth ;108
-  equb >MMTFloor16Earth ;109
-  equb >MMTFloor16Earth ;110
-  equb >MMTFloor16Earth ;111
-  equb >MMTFloor16Earth ;112
-  equb >MMTFloor16Earth ;112
-  equb >MMTFloor16Earth ;114
-  equb >MMTFloor16Earth ;115
-  equb >MMTFloor16Earth ;116
-  equb >MMTFloor16Earth ;117
-  equb >MMTFloor16Earth ;118
-  equb >MMTFloor16Earth ;119
-  equb >MMTFloor16Earth ;120
-  equb >MMTFloor16Earth ;121
-  equb >MMTFloor16Earth ;122
-  equb >MMTFloor16Earth ;123
-  equb >MMTFloor16Earth ;124
-  equb >MMTFloor16Earth ;125
-  equb >MMTFloor16Earth ;126
-  equb >MMTFloor16Earth ;127
 .Mult20Reloc
   equb 0,16,32,48,64,80,96,112,128,144,160,176,192,208,224,240,255
 
@@ -1476,12 +1368,14 @@ rts
     inx 
     bne RelocateTilePatterns2
 
-    .RelocateMMTPointers
+    ldx #$00
+    .RelocateMMTPointersandMapExit
     lda MetaMetaTileListLoReloc, x 
     sta MetaMetaTileListLo, x 
-    inx 
-    bne RelocateMMTPointers
+    inx
+    bne RelocateMMTPointersandMapExit
 
+    ldx #$00
     .RelocateBTD
     lda BinaryToDecimalLoReloc, x 
     sta BinaryToDecimalLo, x 
@@ -1505,118 +1399,136 @@ rts
     cpx #17
     bne RelocateMult20Loop
 
+    ldx #$00
+    .RelocateMCFuncs
+    lda MapChangeFunctionsLoReloc, x 
+    sta MapChangeFunctionsLo, x 
+    inx 
+    cpx #11
+    bne RelocateMCFuncs
+
 rts
 
 .InitOverWrite
+  sei ;disable interrupts
+  cld ;clear decimal mode
 
-sei ;disable interrupts
-cld ;clear decimal mode
+  lda #0
+  tax 
+  tay
+  lda #$b2
+  jsr osbyte
 
-lda #0
-tax 
-tay
-lda #$b2
-jsr osbyte
-
-;disable +1 so we can use $000d
-lda #$a3
-ldx #128
-ldy #1
-jsr osbyte
-lda #$d6 
-sta $0212
-lda #$f1
-sta $0213
-lda #$00
-sta $02ac
-
-
-;Init Stack
-ldx #$ff
-txs 
+  ;disable +1 so we can use $000d
+  lda #$a3
+  ldx #128
+  ldy #1
+  jsr osbyte
+  lda #$d6 
+  sta $0212
+  lda #$f1
+  sta $0213
+  lda #$00
+  sta $02ac
 
 
-ldy #00
-.setoswrchvals
-lda oswrchinitvals, y 
-jsr oswrch
-iny 
-cpy #$0c
-bne setoswrchvals
-; clear mem
-lda #$00
-tax
-.ClearMemoryLoop
-    sta $0000, x
-    inx
-    cpx #$90
-    bne ClearMemoryLoop
-.ClearMemoryLoop2
-    lda #$00
-    sta $400, x 
-    sta $500, x 
-    lda #$ff
-    sta $600, x
-    lda #$00
-    sta $700, x
-    inx 
-    bne ClearMemoryLoop2
+  ;Init Stack
+  ldx #$ff
+  txs 
 
 
-lda #$80
-sta seed+1
-asl a
-sta seed
+  ldy #00
+  .setoswrchvals
+  lda oswrchinitvals, y 
+  jsr oswrch
+  iny 
+  cpy #$0c
+  bne setoswrchvals
+  ; clear mem
+  lda #$00
+  tax
+  .ClearMemoryLoop
+      sta $0000, x
+      inx
+      cpx #$90
+      bne ClearMemoryLoop
+  .ClearMemoryLoop2
+      lda #$00
+      sta $400, x 
+      sta $500, x 
+      lda #$ff
+      sta $600, x
+      lda #$00
+      sta $700, x
+      inx 
+      bne ClearMemoryLoop2
 
 
-lda #ETANKDEFAULTLO
-sta ETank
-LDA #ETANKDEFAULTHI
-sta ETank+1
-
-lda #%00000011
-sta uiflags
-
-lda #INITIALGRAVITYHI
-sta globalgravityhi
-lda #INITIALGRAVITYLO
-sta globalgravitylo
-lda #JUMPSTRENGTHHI
-sta jumpstrengthhi
-lda #JUMPSTRENGTHLO
-sta jumpstrengthlo
-
-;init drawbuffers
-lda SCREENADDRESS2HI
-sta currentbuffer+1
-lda #$00
-sta currentbuffer
-lda #$01
-sta bufferflag
+  lda #$80
+  sta seed+1
+  asl a
+  sta seed
 
 
-; create player
-lda #$e0
-sta variable1
-lda #$a0
-sta variable2
-lda #$01
-sta variable3
-lda #00
-sta variable4
-jsr CreateEntity
+  lda #ETANKDEFAULTLO
+  sta ETank
+  LDA #ETANKDEFAULTHI
+  sta ETank+1
 
-lda #$00
-sta playerrespawn
-sta playerrespawn+1
-lda #$80
-sta playerrespawn+2
-lda #$e8
-sta playerrespawn+3
+  lda #%00000011
+  sta uiflags
 
-jsr DefineEnvelopes
-jsr Relocate
-jmp endinit
+  lda #INITIALGRAVITYHI
+  sta globalgravityhi
+  lda #INITIALGRAVITYLO
+  sta globalgravitylo
+  lda #JUMPSTRENGTHHI
+  sta jumpstrengthhi
+  lda #JUMPSTRENGTHLO
+  sta jumpstrengthlo
+
+  ;init drawbuffers
+  lda SCREENADDRESS2HI
+  sta currentbuffer+1
+  lda #$00
+  sta currentbuffer
+  lda #$01
+  sta bufferflag
+
+
+  ; ; create player
+  lda #$30
+  sta variable1
+  lda #$70
+  sta variable2
+  lda #$01
+  sta variable3
+  lda #00
+  sta variable4
+  jsr CreateEntity
+
+  lda #$00
+  sta playerrespawn
+  sta playerrespawn+1
+  lda #$20
+  sta playerrespawn+2
+  lda #$70
+  sta playerrespawn+3
+
+  jsr DefineEnvelopes
+  jsr Relocate
+  lda #FLASHREPEATTIME
+  sta &252
+  lda #FLASHREPEATTIME
+  sta &253  
+
+  lda #PLAYERSTARTX
+  sta mapposx
+  lda #PLAYERSTARTY
+  sta mapposy
+
+  jmp endinit
+  
 .BinaryToDecimalLoReloc
   equb $30,$30,$30,$30,$30,$30,$30,$30,$30,$30,$31,$31,$31,$31,$31,$31
 .BinaryToDecimalHiReloc

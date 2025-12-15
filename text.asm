@@ -1,15 +1,25 @@
 ;text
 
+.FindStringForWorldLocation
+  lda mapposy
+  jsr Mult16
+  clc 
+  adc mapposx
+  tax 
+  lda MetaColumnMap, x 
+  ldy #$ff
+  .FindStringLoop
+  iny
+  cmp TextWorldLocations, y
+  bne FindStringLoop
+  .EndFindStringLoop
+  lda TextWorldStrings, y 
+rts
+
+; TextWorldLocations
+
 .PrintString
-  tya
-  pha
-  txa 
-  pha
-  jsr DrawTextBox
-  pla 
-  tax
-  pla 
-  tay
+  ;string id in Y
 
   lda #28 ; define box
   jsr oswrch
@@ -33,12 +43,15 @@
   beq EndPrintString
   bpl NoSpecialCharacter ;load a dictionary string
   jsr ProcessDictionaryString
-  equb BITSKIP2
+  beq FinishSpecialCharacter
+  ; equb BITSKIP2
   .NoSpecialCharacter
   jsr osasci
+  .FinishSpecialCharacter
   iny 
-  cpy scratch1
-  bne PrintLoop 
+  ; cpy scratch1
+  ; bne PrintLoop 
+  jmp PrintLoop
   .EndPrintString
   jsr CopyBufferToBuffer
 rts
@@ -73,9 +86,22 @@ rts
   jsr PrintString
 rts
 
+.AddTankGradual
+  lda framecounter
+  and #%00001000 
+  beq ContinueGradualAdd
+  rts
+  .ContinueGradualAdd
+  inc ETank
+  lda ETank
+  cmp #11
+  bne ContinueUpdate
+
+
 .AddTank
   ; Add 10 to the countdown timer, clamp to 30, branch to update UI
 	inc ETank+1
+  .TankOverFlowCheck
 	lda ETank+1
 	cmp #3
 	bcc ContinueUpdate
@@ -171,81 +197,3 @@ rts
   
 .Etank
   equs "knaT -E "
-
-.DrawTextBox
-;top
-  lda #$5a
-  sta DrawBar+4
-  lda #$be
-  sta DrawBar+3
-  ldy #25
-  jsr DrawBar
-
-  lda #$7c
-  sta DrawBar+4
-  lda #$78
-  sta DrawBar+3
-  ldy #25
-  jsr DrawBar
-
-  lda #%00000001
-  sta DrawVBar+1
-  sta DrawVBar+11
-  lda #$5b
-  sta DrawVBar+6
-  lda #$f0
-  sta DrawVBar+5
-  ldy #25
-  jsr DrawVBar
-
-  lda #%10000000
-  sta DrawVBar+1
-  sta DrawVBar+11
-  lda #$5c
-  sta DrawVBar+6
-  lda #$c8
-  sta DrawVBar+5
-  ldy #25
-  jsr DrawVBar
-  jsr CopyBufferToBuffer
-rts
-
-.DrawVBar
-  lda #%00000001
-  ldx #7
-  .DrawVBarInner
-  sta $5ab6, x
-  lda DrawVBar+1
-  eor #%00000001
-  sta DrawVBar+1
-  dex 
-  bpl DrawVBarInner
-  lda DrawVBar+5
-  clc 
-  adc #$40
-  sta DrawVBar+5
-  lda DrawVBar+6
-  adc #1
-  sta DrawVBar+6
-  dey 
-  bpl DrawVBar 
-rts
-
-.DrawBar
-  lda #%10101010 
-  sta $5ab6
-  lda DrawBar+3
-  clc 
-  adc #8
-  sta DrawBar+3
-  lda DrawBar+4
-  adc #0
-  sta DrawBar+4
-  dey 
-  bpl DrawBar
-rts
-
-
-
-
-

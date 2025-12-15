@@ -44,20 +44,71 @@ rts
 
 rts
 
-.DefaultMMTSLoc
-  equb %0000_0000
-  equb %0000_1111
-  equb %0000_0000
-  equb %1111_0000
+; .DefaultMMTSLoc
+;   equb %0000_0000
+;   equb %0000_1111
+;   equb %0000_0000
+;   equb %1111_0000
 
-.DefaultMMTSType
-  equb 0,0,10,10
+; .DefaultMMTSType
+;   equb 0,0,10,10
+
+.DrawExits
+  ldx #<mmtfConveyerLeft2
+  stx readpointer
+  ldx #>mmtfConveyerLeft2
+  stx readpointer+1
+
+  ;turn map pos into index 
+  lda mapposy 
+  jsr Mult16 
+  clc 
+  adc mapposx
+  lsr a 
+  tax 
+  lda ScreenExitData, x 
+  beq AllPathsClear
+  ;work out if we're left or right 4 bits
+  sta scratch1
+  lda mapposx
+  and #%00000001
+  beq RightSide
+  bne DrawExitTiles
+  .RightSide
+  lda scratch1
+  jsr Div16
+  sta scratch1
+  .DrawExitTiles
+  lda scratch1
+  ; juggling registers and vars is troublesome if this is a loop
+  ldy #$03
+  jsr DrawSingleExitTile
+  ldy #$02
+  jsr DrawSingleExitTile
+  ldy #$01
+  jsr DrawSingleExitTile
+  ldy #$00
+  jmp DrawSingleExitTile
+  .AllPathsClear
+rts
+
+.DrawSingleExitTile
+  ror a 
+  bcc EndDrawSingleExitTile
+  pha
+  ; pha 
+  lda ExitPositionslo, y 
+  sta drawaddress
+  lda ExitPositionshi, y 
+  sta drawaddress+1
+  jsr DrawSingleMetaMetaTile
+  pla 
+.EndDrawSingleExitTile
+rts
 
 .DrawMetaMetaTiles
-
   jsr ClearScreen
   ; draw default mmts that will show on every screen
-  ; ldx #$00
   ldy #$00
   sty scratch7
   .LoadDefaultTilesLoop
@@ -117,7 +168,7 @@ rts
   sta variable2
   jsr CalculateDrawOffset
   lda drawaddress+1
-  clc 
+  ; clc 
   adc #$58
   sta drawaddress+1
 
@@ -197,13 +248,13 @@ rts
   bne DrawSingleMetaMetaTileLoop
 
   lda scratch8
-  clc 
+  ; clc 
   adc temp
   adc #1
   sta scratch8
 
   lda scratch9
-  clc 
+  ; clc 
   adc #$80
   sta drawaddress
   sta scratch9
@@ -216,7 +267,7 @@ rts
 
 .DrawSingleMetaTile
 
-  ; metatile address in readpointer
+  ; metatile address in readpointer2
   ; drawaddress in drawaddress
   ; destroys x/y, s1-4, readpointer 2
   ldx #00
@@ -244,12 +295,6 @@ rts
   sta DrawTileLoop+2
   jsr DrawTile
 
-  ; ldy #7
-  ; .DrawSingleMetaTileLoopInner
-  ; lda (readpointer2), y 
-  ; sta (drawaddress), y
-  ; dey 
-  ; bpl DrawSingleMetaTileLoopInner
   ldy #7
   lda MetaTileDrawOffsetsLo, x 
   clc
@@ -263,14 +308,6 @@ rts
   bne DrawSingleMetaTileLoop
 rts
 
-; .DrawTileSMOC
-;   ldy #7
-;   .DrawTileLoopSMOC
-;   lda $ffff, y 
-;   sta $ffff, y 
-;   dey 
-;   bpl DrawTileLoopSMOC
-; rts
 
 .DrawTile
   ldy #7
@@ -282,15 +319,25 @@ rts
 rts
 
 .ReloadScreen
-  jsr ReloadPalette
+  ; ldy #NUMTILECORRUPTION
+  ; .blobo
+  ; tya 
+  ; pha 
+  ; jsr CorruptTile
+  ; pla 
+  ; tay 
+  ; dey 
+  ; bne blobo
+
   jsr DrawMetaMetaTiles
+  jsr DrawExits
   jsr CopyBufferToBuffer
   jsr LoadCollisionData
+  jsr LoadExitCollision
   jsr ReloadEntities
   jsr PrintMapPosition
-  ldx #$ff
-  txs 
-  jmp mainloop
+  jmp ReloadPalette
+  ; jsr Reset
   ; tailcall
 
 .CalculateDrawOffset 
@@ -371,7 +418,7 @@ rts
     adc targetbuffer
     sta drawaddress+1
 
-    ; x alignement with 8x8 grid
+    ; x alignment with 8x8 grid
     lda entitiesxpos, x 
     and #7
     sta variable5
@@ -415,7 +462,7 @@ rts
 .ClearBuffer1
   lda #$58
   sta targetbuffer
-  bpl ProcessClear ;always branc
+  bpl ProcessClear ;always branch
 
 .ClearBuffer2
   lda #$30
@@ -477,7 +524,7 @@ rts
   ldy #$07
   .DrawStaticSpriteLoop
   lda (readpointer2), y
-  ; ora (drawaddress), y 
+  ; eor (drawaddress), y 
   sta (drawaddress), y 
   dey
   bpl DrawStaticSpriteLoop
@@ -742,126 +789,6 @@ rts
   bpl DrawUnAlignedSpriteXYLoop5
 rts
 
-; .DrawSingleSprite
-
-;   ;v1 = drawaddresslo
-;   ;v2 = drawaddress hi
-;   ;v3 = sprite width 
-;   ;v4 = sprite height 
-;   ;v5 = xoffset
-;   ;v6 = yoffset
-;   ;readpointer = sprite address
-;   lda #$00
-;   sta scratch1
-
-;   lda #$ea
-;   sta SmocDrawEnd
-
-
-;   ;store the draw block 1 to the right of base drawaddress
-;   lda drawaddress
-;   clc 
-;   adc #8
-;   sta drawaddress2
-;   lda drawaddress+1
-;   adc #0
-;   sta drawaddress2+1
-
-;   ldy #$07 ; loop 8 times to draw an 8x8 sprite
-;   .DrawSingleUnalignedSpriteLoop
-;   lda #0
-;   sta scratch1
-;   lda (readpointer), y ;read row of pixels
-;   pha
-;   ldx currententity
-;   lda entitiesfliphorizontally, x 
-;   beq nohorizontalpixelflip1
-;   pla
-;   jsr ReverseBitOrder
-;   equb $24 ; use bit to skip next 1 bytes
-;   .nohorizontalpixelflip1
-;   pla ; this is skipped if we enter after reversing the order of the pixels to draw
-;   jsr Spritexrotation ; shift pixels to the right based on offset from grid
-;   .SmocStore1
-;   ora (drawaddress), y ; ora means we don't overwrite what's already there
-;   sta (drawaddress), y ;store final pixels in baseaddress
-;   dey 
-;   cpy variable6 ; this will break the loop early based on the yoffet from the grid
-;   bpl DrawSingleUnalignedSpriteLoop
-;   .SmocDrawEnd
-;   nop
-
-;   lda variable6 ; if there is no yoffset, we can skip the rest of the draw
-;   ;as the sprite is vertically aligned with the grid
-;   beq EndDrawSingleSprite
-
-;   lda #$60
-;   sta SmocDrawEnd
-
-;   ;move base address down by 1 block
-;   jsr MoveDrawAddressDown1Row
-
-;   ;store baseaddress +1 block right
-;   lda drawaddress
-;   adc #8
-;   sta drawaddress2
-;   lda drawaddress+1
-;   adc #0
-;   sta drawaddress2+1
-
-
-;   lda readpointer
-;   adc #8
-;   sta readpointer
-;   lda readpointer+1
-;   adc #0
-;   sta readpointer+1
-
-;   ldy variable6
-;   dey
-;   lda #$00
-;   sta variable6
-;   jmp DrawSingleUnalignedSpriteLoop
-;   ; .DrawSingleUnalignedSpriteLoop2
-;   ; lda #0
-;   ; sta scratch1
-
-;   ; lda (readpointer), y
-;   ; pha
-;   ; ldx currententity
-;   ; lda entitiesfliphorizontally, x 
-;   ; beq nohorizontalpixelflip2
-;   ; pla
-;   ; jsr ReverseBitOrder
-;   ; equb $24 ; skip next 1 bytes 
-;   ; .nohorizontalpixelflip2
-;   ; pla ; this is skipped if we enter after reversing the order of the pixels to draw
-;   ; jsr Spritexrotation
-;   ; ora (drawaddress), y
-;   ; sta (drawaddress),y
-;   ; dey
-;   ; bpl DrawSingleUnalignedSpriteLoop2
-
-;   .EndDrawSingleSprite
-
-; rts
-
-; .Spritexrotation
-;   ldx variable5 ; load xoffset from grid as loopcounter
-;   beq EndSpritexrotation ;if no offset, skip routine
-;   .Spritexrotationloop
-;   lsr a ;move bit1 of current pixel strip into carry
-;   ror scratch1 ; move carry into bit 8 of temp mem
-;   dex ;loop for each xoffset
-;   bne Spritexrotationloop
-;   pha ;store modded pixel strip
-;   lda scratch1 ; retrieve shifted out pixels
-;   .SmocSpriteRotation
-;   ora (drawaddress2), y
-;   sta (drawaddress2), y ; store shifted pixels one block to the right
-;   pla ;retrieve stored pixels
-;   .EndSpritexrotation
-; rts
 
 .SPXRot
   ldx variable5 ; load xoffset from grid as loopcounter
@@ -895,7 +822,7 @@ rts
   ldy #00
   lda (readpointer), y
   jsr Div16 
-  bmi RandomisePalette
+  ; bmi RandomisePalette
   tay 
   ;fallthrough to set pal, SP can be invoked on its own too
 .SetPalette
@@ -919,6 +846,25 @@ rts
   lda #$0c
   jsr osword
 rts
+
+; .cyclepal
+;   inc palcycle
+;   lda palcycle
+;   cmp #14
+;   bne nopalreset
+;   lda #2
+;   sta palcycle
+;   .nopalreset
+;   tay
+;   lda PaletteListLo, y 
+;   sta readpointer
+;   lda PaletteListHi, y 
+;   sta readpointer+1
+;   ldy #00
+;   jsr WritePaletteBlock
+;   ldy #1
+;   jsr WritePaletteBlock
+; rts
 
 .SpriteClearPreparation
   lda entitiesdrawposlolastframe, x 

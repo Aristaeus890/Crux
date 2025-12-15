@@ -2,22 +2,50 @@
 ;ENTITIES
 ;;;;;;
 
+.DestroyEntity
+  sta entitiestype, y 
+  sta entitiesxpos, y
+  sta entitiesypos, y
+  sta entitiesstate, y
+  sta entitiesstatic, y
+  ; sta entitiesvxlo, y
+  ; sta entitiesvxhi, y
+  ; sta entitiesvyhi, y
+  ; sta entitiesvylo, y
+  ; sta entitiesspecial, y
+  ; sta entitiesfliphorizontally, y
+  ; sta entitiesspriteaddresslo, y
+  ; sta entitiesspriteaddresshi, y
+  ; sta entitiesanimationtrack, y
+  ; sta entitiesanimationaddresslo, y
+  ; sta entitiesanimationaddresshi, y
+  ; sta entitiesanimationtimermax, y
+  ; sta entitiesanimationtimer, y
+  ; sta entitiesxposlo, y
+  ; sta entitiesyposlo, y
+  ; sta entitiesxposlastframe, y
+  ; sta entitiesyposlastframe, y
+  ; sta entitiesdrawposlo, y
+  ; sta entitiesdrawposhi, y
+  ; sta entitiesdrawposlolastframe, y
+  ; sta entitiesdrawposhilastframe, y
+  ; sta entitieswidth, y
+  ; sta entitiesheight, y
+  ; sta entitiescollision, y
+  ; sta entitiesredraw, y
+rts
+
 .CreateEntity ; var1=x var2=y var3= type
-  ldy #00
+  ldx #$00
+  ldy #$00
     .CreateEntityLoop ; search for an empty slot
       lda entitiestype, x 
       bne NextEntityLoop ; if there is an entity here already, check the next one
       lda variable1 ; else store position and type in this slot
       sta entitiesxpos, x 
       lda variable2
-      sta entitiesypos, x
-      ; lda variable3
-      ; bmi NoSetPosNonStatic
-      ; lda entitiesypos, x 
-      ; clc 
       ; adc #$08
-      ; sta entitiesypos, x 
-      ; .NoSetPosNonStatic
+      sta entitiesypos, x
       lda variable3
       bpl NoCreateStatic
       sta entitiesstatic, x 
@@ -55,61 +83,8 @@
       bne CreateEntityLoop 
 rts
 
-; .ProcessEntities
-;   ;iterate over every entity and process their behaviour  
-;   ldx #NUMENTITIES-1
-;   pha
-;   .ProcessEntitiesLoop
-;     lda entitiestype, x 
-;     beq NoEntityInSlot
-;     jsr StoreLastFrameData
-;     ; could cache this at the start of the loop
-;     ; save 2 cycles per entity over 5 entities
-;     ; so 10 cycles if all 10 entity slots are filled is probably not worth the bytes 
-;     lda #>EndProcessEntity
-;     pha 
-;     lda #<EndProcessEntity-1
-;     pha
-
-;     lda entitiesstate, x 
-;     tay 
-;     lda EntityStatesHi, y 
-;     pha 
-;     lda EntityStatesLo, y 
-;     pha 
-
-;     tax 
-;     pha
-;   .NoEntityInSlot
-;     dex
-;     bpl ProcessEntitiesLoop
-;     pla 
-;     tax 
-;     stx currententity
-;     ; ldx #$00
-;     ; stx currententity
-; rts
-
-; .EndProcessEntity
-;   jsr SetEntityDrawPosition
-;   pla
-;   tax 
-;   stx currententity
-;   ; inc currententity
-;   ; ldx currententity
-; rts
-
 .ProcessEntities
   ;iterate over every entity and process their behaviour
-
-  ; lda framecounter
-  ; lsr a 
-  ; bcc ProcessEvenFrames
-  ; ldx #1
-  ; equb BITSKIP2
-  ; .ProcessEvenFrames
-  
-
   ldx #NUMENTITIES-1
   .ProcessEntitiesLoop
     lda entitiestype, x 
@@ -119,7 +94,9 @@ rts
 
     lda #>EntityComplete 
     pha
-    lda #<EntityComplete-1
+    lda #<EntityComplete
+    sec
+    sbc #$01
     pha
 
     ;else set up rts jump to state function
@@ -143,14 +120,6 @@ rts
 rts
 
 .GenericInit
-  ; lda entitiesstatic, x 
-  ; bne StaticInit
-  ; lda entitiesypos, x 
-  ; clc 
-  ; adc #$08
-  ; sta entitiesypos, x 
-  ; .StaticInit
-
   ldy entitiestype, x 
   lda EntityStatesInitial, y
   sta entitiesstate, x 
@@ -165,13 +134,14 @@ rts
   jmp InitAnimation
 
 .ProcessPlayer
+  jsr AnimateSprite
   jsr PlayerInput
   jsr TestMovementX
   inc entitiesypos,x
   lda #PLAYER_FRICTION
   sta variable1
   jsr ApplyFriction
-  jsr LimitSpeed
+  jsr LimitSpeedWalking
   jsr TestMovementY
   ; if we didn't hit the ground, shift state and end function
   bne playercollidedwithground
@@ -179,10 +149,8 @@ rts
     jmp PlayerEnterState
   .playercollidedwithground
   jsr SpriteCollide
-  jsr CheckForSpecialTileEffect
-  jmp AnimateSprite
-  ; jmp CollideWithStaticEntities
-
+  jmp CheckForSpecialTileEffect
+  ; jmp AnimateSprite
 
 
 .ProcessPlayerWallSliding
@@ -216,18 +184,40 @@ rts
   jsr SpriteCollide
   rts
 
-.ProcessPlayerJumping ; (Crouching)
+.ProcessPlayerCrouching 
+  lda #PLAYER_FRICTION_SLIDING
+  sta variable1
+  jsr ApplyFriction
+  jsr TestMovementX
+  jsr PlayerInput
+  lda #KEYS
+  jsr CheckKeyHeld
+  bne nocrouchrelease
+  jsr ActionExitCrouch
+  .nocrouchrelease
+rts
 
-  rts
+; .ProcessPlayerCrouching
+;   jsr PlayerInput
 
 .ProcessPlayerFalling
+  ; load action set repeatedly to fix falling jump bug :()
+  ldy #ACTIONSETJUMPING
+  jsr LoadActionSet
   jsr PlayerInput
-  .nostatechangejumping1
+  ; if not pressing jump, set gravity hi
+  lda keysthisframe 
+  and #%00010000
+  bne NoFallRelease
+  lda #RELEASEGRAVITYLO
+  sta globalgravitylo
+  .NoFallRelease
+
   ; add and apply gravity1
   lda globalgravitylo
   ldy globalgravityhi
   jsr AddyVelocity
-  jsr LimitSpeed
+  jsr LimitSpeedWalking
   jsr TestMovementX
   jsr TestMovementY 
   beq playerstillfalling
@@ -237,10 +227,10 @@ rts
   ;check for wall slide 
   jsr CheckForWallslide
   .nowallslide1
-  jsr SpriteCollide
-  jsr AnimateSprite
+  jmp SpriteCollide
+  ; jsr AnimateSprite
   ; jmp CollideWithStaticEntities
-  rts
+  ; rts
 
 ;crawler behaviour
   ; Continue in same direction
@@ -265,38 +255,38 @@ rts
 
 .CrawlerDirSwitchY
   ; check down
-  inc entitiesypos, x 
-  jsr CollideWithTileMap
-  lda scratch7
-  ora scratch8
-  beq CrawlerXSwitch
-  dec entitiesypos, x 
-  dec entitiesypos, x 
-  jsr CollideWithTileMap
-  lda scratch5
-  ora scratch6
-  beq CrawlerXSwitch
-  inc entitiesypos, x 
+  ; inc entitiesypos, x 
+  ; jsr CollideWithTileMap
+  ; lda scratch7
+  ; ora scratch8
+  ; beq CrawlerXSwitch
+  ; dec entitiesypos, x 
+  ; dec entitiesypos, x 
+  ; jsr CollideWithTileMap
+  ; lda scratch5
+  ; ora scratch6
+  ; beq CrawlerXSwitch
+  ; inc entitiesypos, x 
 
 
   .CrawlerXSwitch
-  dec entitiesxpos, x 
-  jsr CollideWithTileMap
-  lda scratch7
-  ora scratch8
-  beq NoCrawlerSwitchDown
-  inc entitiesstate, x 
-  inc entitiesxpos, x 
-  jmp AnimateSprite
-  .NoCrawlerSwitchDown
-  dec entitiesypos, x 
-  dec entitiesypos, x
-  jsr CollideWithTileMap
-  lda scratch5
-  ora scratch8
-  beq NoCrawlerSwitchUp
-  rts
-  .NoCrawlerSwitchUp
+  ; dec entitiesxpos, x 
+  ; jsr CollideWithTileMap
+  ; lda scratch7
+  ; ora scratch8
+  ; beq NoCrawlerSwitchDown
+  ; inc entitiesstate, x 
+  ; inc entitiesxpos, x 
+  ; jmp AnimateSprite
+  ; .NoCrawlerSwitchDown
+  ; dec entitiesypos, x 
+  ; dec entitiesypos, x
+  ; jsr CollideWithTileMap
+  ; lda scratch5
+  ; ora scratch8
+  ; beq NoCrawlerSwitchUp
+  ; rts
+  ; .NoCrawlerSwitchUp
   rts
 
 .ProcessHBouncer
@@ -332,16 +322,13 @@ rts
   ora scratch7
   ora scratch8
   beq NoBouncerFlip
-  ; lda #SOUNDJUMP
-  ; sta variable1
-  ; jsr PlaySound
   lda entitiesspecial, x 
   eor #$01
   sta entitiesspecial, x 
   jmp ProcessVBouncer
   .NoBouncerFlip
   rts
-  jmp AnimateSprite
+  ; jmp AnimateSprite
 
 .ProcessBouncerEnabled
   jmp AnimateSprite
@@ -356,50 +343,77 @@ rts
   .NoBouncerReenable
 rts
 
-.PlayerInput
+; .PlayerInput
+;   lda #$04
+;   sta extraloopcounter2
+;   lda #16
+;   .InputLoop
+;   dec extraloopcounter2
+;   lsr a
+;   pha 
+;   beq NoPlayerAction
+;   lda #KEYA
+;   jsr CheckKeyPressed
+;   beq NoKey
+;   ldy extraloopcounter2
+;   lda daction 
+;   tay 
+;   jsr DoAction
+;   .NoKey
+;   pla
+;   jmp InputLoop
+;   .NoPlayerAction
+;   pla
+; rts
 
+
+
+.PlayerInput
   lda #KEYW
-  jsr CheckKey
+  jsr CheckKeyPressed
   beq noplayerw
   ldy waction
   jsr DoAction
   .noplayerw
 
   lda #KEYA
-  jsr CheckKey
+  jsr CheckKeyPressed
   beq noplayera
   ldy aaction
   jsr DoAction
   .noplayera
 
-  lda #KEYD
-  jsr CheckKey
-  beq noplayerd
-    ldy daction
-    jsr DoAction
-  .noplayerd
+  lda #KEYS
+  jsr CheckKeyPressed
+  beq noplayers
+  ldy saction
+  jsr DoAction
+  .noplayers
 
+  lda #KEYD
+  jsr CheckKeyPressed
+  beq noplayerd
+  ldy daction
+  jsr DoAction
+  .noplayerd
   lda #KEYK
-  jsr CheckKey
-  cmp #2
-  bne noplayerk
-    ldy kaction
-    jsr DoAction
+  jsr CheckKeyJustPressed
+  beq noplayerk
+  ldy kaction
+  jsr DoAction
   .noplayerk
 
-  lda #2
-  jsr CheckKey
+  lda #KEYL
+  jsr CheckKeyJustPressed
   beq noplayerl
-    ldy saction
-    jsr DoAction
+  ldy laction
+  jsr DoAction
   .noplayerl
-
-  lda #128
-  jsr CheckKey
-  cmp #2
-  bne noplayerreturn
-    ldy returnaction
-    jmp DoAction
+  lda #KEYRETURN
+  jsr CheckKeyJustPressed
+  beq noplayerreturn
+  ldy returnaction
+  jsr DoAction
   .noplayerreturn
 rts
 
@@ -408,7 +422,7 @@ rts
   lda globalgravitylo
   ldy globalgravityhi
   jsr AddyVelocity
-  ; jsr LimitSpeed
+  jsr LimitSpeedDiving
   jsr TestMovementX
   jsr TestMovementY 
   beq playerstilldiving
@@ -419,59 +433,59 @@ rts
   .nowallslide3
 
   jsr SpriteCollide
-  jsr AnimateSprite
-rts
+  jmp AnimateSprite
+; rts
   ; jmp CollideWithStaticEntities
 ; jmp EntityComplete
 
 .ProcessPlayerSliding
   jsr PlayerInput
     ; add and apply gravity
-  lda globalgravitylo
-  ldy globalgravityhi
-  jsr AddyVelocity
+  ; lda globalgravitylo
+  ; ldy globalgravityhi
+  ; jsr AddyVelocity
   lda #PLAYER_FRICTION_SLIDING
   sta variable1
   jsr ApplyFriction
-  ; jsr LimitSpeed
   jsr TestMovementX
   beq slidingdidnothitwall
     ldy #PLAYERSTATEONFLOOR
     jsr PlayerEnterState
   .slidingdidnothitwall
   jsr TestMovementY
+
   lda entitiesvxhi, x 
   ora entitiesvxlo, x 
   bne slidingnostop
     ldy #PLAYERSTATEONFLOOR
-    jsr PlayerEnterState
+    jmp PlayerEnterState
   .slidingnostop
-  jsr SpriteCollide
-  jsr AnimateSprite
-  jsr CheckForSpecialTileEffect
+  ; jsr SpriteCollide
+  ; jsr AnimateSprite
+  ; jsr CheckForSpecialTileEffect
   ; jmp CollideWithStaticEntities
 rts
 
 .ProcessPlayerOnLadder
   lda #KEYW
-  jsr CheckKey
+  jsr CheckKeyPressed
   beq noladderup
   jsr AnimateSprite
   dec entitiesypos, x 
   .noladderup
   lda #KEYS
-  jsr CheckKey
+  jsr CheckKeyPressed
   beq noladderdown
   jsr AnimateSprite
   inc entitiesypos, x 
   .noladderdown
   lda #KEYA
-  jsr CheckKey
+  jsr CheckKeyPressed
   beq noladderleft
   dec entitiesxpos, x 
   .noladderleft
   lda #KEYD
-  jsr CheckKey
+  jsr CheckKeyPressed
   beq noladderight
   inc entitiesxpos, x 
   .noladderight
@@ -557,13 +571,23 @@ rts
 rts
 
 .CheckForSpecialTileEffect
+  ;0x00000001 = solid
+  ;0x00000010 = jump pad
+  ;0x00000100 = conveyor right
+  ;0x00001000 = conveyer left
+  ;0x00010000 = conveyer up
+  ;0x00100000 = death surface
+  ;0x01000000 = 
+  ;0x10000000 = ladder
+
+
   lda lastycollision
   bpl NoSpecialBit8
   .NoSpecialBit8
   lsr a ;skip over bit 1 (collision bit)
   lsr a
   bcc NoSpecialBit2
-  ;bouncepad
+  ; 0x00000010 - bouncepad
   pha
   ldy #PLAYERSTATEBOUNCING
   jsr PlayerEnterState
@@ -571,7 +595,7 @@ rts
   .NoSpecialBit2
   lsr a
   bcc NoSpecialBit3
-  ;Conveyor Belt Right
+  ; 0x00000100 - conveyor right
   pha
   lda entitiesxposlo, x 
   clc 
@@ -584,22 +608,27 @@ rts
   .NoSpecialBit3
   lsr a
   bcc NoSpecialBit4
-  ;conveyor belt left
+  ; 0x00001000 - conveyor left
   pha
-  lda entitiesxposlo, x 
-  sec 
-  sbc #CONVEYORBELTSPEED
-  sta entitiesxposlo, x 
   lda entitiesxpos, x 
-  sbc #0
+  sec
+  sbc #$01
   sta entitiesxpos, x 
   pla
   .NoSpecialBit4
   lsr a
   bcc NoSpecialBit5
+  ;conveyor up
+  ; pha
+  ; lda entitiesxpos, x 
+  ; adc #$00 ; carry is guaranteed set here
+  ; sta entitiesxpos, x  
+  ; pla
   .NoSpecialBit5
   lsr a
   bcc NoSpecialBit6
+  ;death surface
+  jmp Respawn
   .NoSpecialBit6
   lsr a
   bcc NoSpecialBit7
@@ -669,9 +698,6 @@ rts
 rts
 
 .ApplyFriction
-		; ldy #0
-		; jsr SetPalette
-    ; ldx currententity
   lda entitiesvxhi, x 
   ora entitiesvxlo, x 
   beq EndApplyFriction
@@ -704,6 +730,26 @@ rts
   sta entitiesvxlo, x 
 rts
 
+.LimitSpeedDiving
+  lda #$02
+  sta variable1 ;x
+  lda #$01 ; y 
+  sta variable2
+  lda #$fe
+  sta variable3 ; x
+  lda #$ff 
+  sta variable4
+  jmp LimitSpeed
+
+.LimitSpeedWalking
+  lda #$01
+  sta variable1
+  sta variable2
+  lda #$ff
+  sta variable3
+  sta variable4
+
+
 .LimitSpeed
   lda entitiesvxhi, x
   ora entitiesvxlo, x 
@@ -713,24 +759,26 @@ rts
   bpl LimitSpeedRight
   .LimitSpeedLeft
     lda entitiesvxhi, x 
-    cmp #$ff
+    cmp variable3
     bcs NoSpeedLimitRight
     lda entitiesvxlo, x 
     beq NoSpeedLimitRight
     lda #$00
     sta entitiesvxlo, x     
-    lda #$ff
+    lda variable3
     sta entitiesvxhi, x  
     jmp NoSpeedLimitRight
   .LimitSpeedRight
     lda entitiesvxhi, x 
-    beq NoSpeedLimitRight
+    cmp variable1
+    bcc NoSpeedLimitRight
     lda entitiesvxlo, x 
     beq NoSpeedLimitRight
-    lda #$01
-    sta entitiesvxhi, x 
-    lda #0
-    sta entitiesvxlo,x
+    lda #$00
+    sta entitiesvxlo, x     
+    lda variable1
+    sta entitiesvxhi, x  
+    jmp NoSpeedLimitRight
   .NoSpeedLimitRight
 
   lda entitiesvyhi, x
@@ -812,7 +860,11 @@ rts
 rts
 
 .ActionMoveLeft
-  inc entitiesfliphorizontally,x
+  lda lastycollision
+  beq moveleftinair
+  lda #1
+  sta entitiesfliphorizontally, x 
+  .moveleftinair
   ;if we aren't moving, init the run animation
   lda entitiesvxhi, x 
   ora entitiesvxlo, x 
@@ -820,6 +872,12 @@ rts
   lda #PLAYERANIMATIONWALKRIGHT
   jsr InitAnimation
   .dontinitrunanimationleft
+  lda entitiesvxhi, x 
+  bmi MoveLeftNormally
+  lda #PLAYER_ACCELERATION
+  lsr a 
+  equb BITSKIP2
+  .MoveLeftNormally
   lda #PLAYER_ACCELERATION
   sta variable1
   lda #0
@@ -827,6 +885,7 @@ rts
   ;allow to fall through to sub velocity
 
 .SubxVelocity
+    ;velocity lo in a, velocity hi in
     lda entitiesvxlo, x 
     sbc variable1
     sta entitiesvxlo, x 
@@ -837,7 +896,11 @@ rts
 
 
 .ActionMoveRight
-
+  lda lastycollision
+  beq moverightinair
+  lda #0
+  sta entitiesfliphorizontally, x 
+  .moverightinair
   ;if we aren't moving, init the run animation
   lda entitiesvxhi, x 
   ora entitiesvxlo, x 
@@ -845,12 +908,15 @@ rts
   lda #PLAYERANIMATIONWALKRIGHT
   jsr InitAnimation
   .dontinitrunanimationright
+  lda entitiesvxhi, x 
+  bpl MoveRightNormally
   ; add acceleration
-  lda #0
-  sta entitiesfliphorizontally,x
-  tay
   lda #PLAYER_ACCELERATION
-  sta variable2
+  lsr a 
+  equb BITSKIP2
+  .MoveRightNormally
+  lda #PLAYER_ACCELERATION
+  ldy #0
   ;allow to fall through to add vel
 
 .AddxVelocity
@@ -895,47 +961,137 @@ rts
     sta bufferflag
   ldy #3
   sta gamestate
-  ldx #$ff
-  txs 
-  jmp mainloop
+  jmp Reset
 
 rts
 
 
 .ActionPause
 
+.ActionEnterCrouch
+  ldy #PLAYERSTATECROUCHING
+  jmp PlayerEnterState
+
+.ActionExitCrouch
+  ldy #PLAYERSTATEONFLOOR
+  jmp PlayerEnterState
+
+.ActionLongJump
+  lda #LONGJUMPGRAVITYHI
+  sta globalgravityhi
+  lda #LONGJUMPGRAVITYLO
+  sta globalgravitylo
+
+  lda #LONGJUMPSTRENGTHYHI
+  sta entitiesvyhi, x 
+  lda #LONGJUMPSTRENGTHYLO
+  sta entitiesvylo, x
+  lda entitiesfliphorizontally, x
+  beq LongJumpRight
+  .LongJumpLeft
+  lda #LONGJUMPSTRENGTHXLOLEFT
+  sta entitiesvxlo, x 
+  lda #LONGJUMPSTRENGTHXHILEFT
+  sta entitiesvxhi, x 
+  jmp LongJumpNormal 
+  .LongJumpRight
+  lda #LONGJUMPSTRENGTHXHIRIGHT
+  sta entitiesvxhi, x 
+  lda #LONGJUMPSTRENGTHXLORIGHT
+  sta entitiesvxlo, x 
+  .LongJumpNormal
+  lda #PLAYERSTATEDIVING
+  sta entitiesstate, x 
+  lda #PLAYERANIMATIONDIVING
+  jsr InitAnimation
+  .NoLongJump
+  rts
+
 .ActionJump
+  ; if we are moving right & pressing left, do a flip jump
+  
+  ; if not moving, do a normal up jump
+  lda entitiesvxhi, x 
+  ora entitiesvxlo, x 
+  beq NormalJumpVel
+  
+
+  ; if moving left but pressing right, do a flip jump
+  lda entitiesvxhi, x 
+  bpl CheckLeftFlip
+  lda keysthisframe ; if moving right, check left key
+  and #KEYD
+  beq NormalJumpVel
+  ; load a right flip
+  bne JumpRightFlip
+
+  .CheckLeftFlip
+  lda keysthisframe
+  and #KEYA
+  beq NormalJumpVel
+  bne JumpLeftFlip
+
+  .NormalJump
+  lda #PLAYERANIMATIONJUMPING
+  sta variable1
+  jsr InitAnimation
+
+  ;else do a normal jump
+  .NormalJumpVel
   lda jumpstrengthhi
   sta entitiesvyhi, x 
   lda jumpstrengthlo
   sta entitiesvylo, x
-  lda #INITIALGRAVITYHI
-  sta globalgravityhi
-  lda #INITIALGRAVITYLO
-  sta globalgravitylo
+  .NormalJumpEffects
+  jsr ResetGravity
   inc jumpedthisframe
-  ldy #ACTIONSETJUMPING
-  jsr LoadActionSet
   ldy #PLAYERSTATEFALLING
   jsr PlayerEnterState
-  lda #SOUNDJUMP
-  sta variable1
-  jmp PlaySound
+  ldy #SOUNDJUMP
+  ; sty variable1
+  jsr PlaySound
+  ldy #ACTIONSETJUMPING
+  jmp LoadActionSet
 ;tailcall
 
+.JumpRightFlip
+  inc entitiesfliphorizontally, x 
+  lda #$01
+  sta entitiesvxhi, x 
+  bne JumpFlip
+
+.JumpLeftFlip
+  lda #$00
+  sta entitiesfliphorizontally, x
+  lda #$ff
+  sta entitiesvxhi, x 
+
+.JumpFlip
+
+  lda #27
+  sta variable1
+  jsr InitAnimation
+  lda #JUMPSTRENGTHFLIPHI
+  sta entitiesvyhi, x 
+  lda #JUMPSTRENGTHFLIPLO
+  sta entitiesvylo, x 
+
+  lda #0
+  sta entitiesvxlo, x
+  
+  jmp NormalJumpEffects
+
 .ActionDoubleJump
-  ; lda allowedjumps
-  ; beq nodoublejumpallowed
-  ; dec allowedjumps
-  ; lda jumpstrengthlo
-  ; sta entitiesvylo, x 
-  ; lda jumpstrengthhi
-  ; sta entitiesvyhi, x
-  ; lda #01
-  ; .nodoublejumpallowed
+
 rts
 
 .ActionWallJump
+  ldy #SOUNDJUMP
+  ; sty variable1
+  jsr PlaySound
+  jsr ResetGravity
+  lda #PLAYERANIMATIONWALKRIGHT
+  jsr InitAnimation
   inc jumpedthisframe
   ldy #PLAYERSTATEFALLING
   jsr PlayerEnterState
@@ -962,6 +1118,13 @@ rts
   sta entitiesvxlo, x
   lda #WALLJUMPLEFTXHI
   sta entitiesvxhi, x
+rts
+
+.ResetGravity
+  lda #INITIALGRAVITYHI
+  sta globalgravityhi
+  lda #INITIALGRAVITYLO
+  sta globalgravitylo
 rts
 
 .ActionInvertGravity
@@ -996,10 +1159,10 @@ rts
   ldy #NUMENTITIES-1
   .ReloadClearEntitiesLoop
   lda entitiestype, y 
-  cmp #1 
+  cmp #ENTITYPLAYER
   beq NextReloadClearEntitiesLoop
   lda #$00
-  sta entitiestype, y 
+  jsr DestroyEntity
   .NextReloadClearEntitiesLoop
   dey 
   bpl ReloadClearEntitiesLoop
@@ -1016,13 +1179,9 @@ rts
   cmp #$ff
   beq EndLoadScreenEntitiesLoop
   and #%11110000
-  ; clc 
-  ; adc #8
   sta variable1
   lda (readpointer), y 
   jsr Mult16
-  ; clc 
-  ; adc #8
   sta variable2
   iny 
   lda (readpointer), y 
@@ -1067,9 +1226,7 @@ rts
   sta entitiesypos, y 
   jsr ReloadScreen
   jsr ContinueUpdate ; skip to the UI update past any checks to force an update
-  ldx #$ff
-  txs 
-  jmp mainloop
+  jmp Reset
 
 .SetSpawn
   ; lda mapposx
@@ -1082,63 +1239,7 @@ rts
   ; sta playerrespawn+3
 rts
 
-.CheckForMapChange
-  lda triggermapchange
-  beq nomapchange
-    tay 
-    lda #$00
-    sta triggermapchange
-    lda MapChangeFunctionsHi, y 
-    pha 
-    lda MapChangeFunctionsLo, y 
-    pha 
-  .nomapchange
-rts
 
-.IncWith16OverFlowCheck
-  sta scratch1
-  inc scratch1
-  lda #16
-  bit scratch1
-  beq No16OverFlow
-  lda #00
-  rts
-  .No16OverFlow
-  lda scratch1
-rts
-
-.DecWith16UnderFlowCheck
-  sta scratch1
-  dec scratch1
-  bpl No16UnderFlow
-  lda #15
-  rts
-  .No16UnderFlow
-  lda scratch1
-rts
-
-.MapChangeNone ; never called
-.MapChangeLeft
-  lda mapposx
-  jsr DecWith16UnderFlowCheck
-  sta mapposx
-  bpl EndMapChange ;always branch
-.MapChangeRight
-  lda mapposx
-  jsr IncWith16OverFlowCheck
-  sta mapposx
-  bpl EndMapChange ;always branch
-.MapChangeUp
-  lda mapposy
-  jsr DecWith16UnderFlowCheck
-  sta mapposy
-  bpl EndMapChange ;always branch
-.MapChangeDown
-  lda mapposy
-  jsr IncWith16OverFlowCheck
-  sta mapposy
-  .EndMapChange
-  jmp ReloadScreen
   
 ;tailcall
 
@@ -1181,28 +1282,18 @@ rts
 rts
 
 .PlayerEnterStateFalling
-  ; lda jumpstrengthhi
-  ; sta entitiesvyhi, x 
-  ; lda jumpstrengthlo
-  ; sta entitiesvylo, x
-  lda #PLAYERANIMATIONJUMPING
-  sta variable1
-  jmp InitAnimation
-;tailcall
+  
+rts
 
-.PlayerEnterStateJumping
-  ; lda jumpstrengthhi
-  ; sta entitiesvyhi, x 
-  ; lda jumpstrengthlo
-  ; sta entitiesvylo, x
-  ; lda #PLAYERANIMATIONJUMPING
-  ; sta variable1
-  ; jmp InitAnimation
-;tailcall
-
+.PlayerEnterStateCrouching
+  ldy #ACTIONSETCROUCHING
+  jsr LoadActionSet
+rts
 
 .PlayerEnterStateBouncing
-  lda #SOUNDBOUNCE
+  jsr ResetGravity
+  ldy #SOUNDBOUNCE
+  ; sta variable1
   jsr PlaySound
   ldy #ACTIONSETJUMPING
   jsr LoadActionSet
@@ -1212,13 +1303,18 @@ rts
   sta entitiesvylo, x
   lda #PLAYERSTATEFALLING
   sta entitiesstate, x 
-  rts
-  ; lda #PLAYERANIMATIONWALKRIGHT
-  ; sta variable1
-  ; jmp InitAnimation
-;tailcall
+rts
+
 
 .PlayerEnterStateWallSliding
+  ; set facing opposite to move direction
+  lda entitiesvxhi, x 
+  bpl WallSlideRight
+  lda #$01
+  equb BITSKIP2
+  .WallSlideRight
+  lda #$00
+  sta entitiesfliphorizontally, x
   ldy #ACTIONSETWALLSLIDING
   jsr LoadActionSet
   jsr ZeroXVelocity
@@ -1240,9 +1336,28 @@ rts
   jmp InitAnimation
 ;tailcall
 
+; .PlayerEnterStateCrouching
+;   lda #JUMPSTRENGTHHI
+;   sta jumpstrengthhi
+;   lda #JUMPSTRENGTHLO
+;   sta jumpstrengthlo
+
+;   lda #PLAYERANIMATIONWALKRIGHT
+;   jsr InitAnimation
+;   ldy #PLAYERANIMATIONCLIMBLADDER
+;   jsr LoadActionSet ; always returns negative
+;   bmi ZeroYVelocity
+
 .ProcessEntityAnimate
   jmp AnimateSprite
   ; jmp EndProcessEntity
+
+.ProcessDoorInit
+  lda #STATEDOORCLOSED
+  sta entitiesstate, x 
+  jsr StoreXYAsVariable
+  lda #$01
+  jmp WriteToCollisionMap
 
 .ProcessEntityDoorClosed
   lda uiflags
@@ -1314,9 +1429,8 @@ rts
 
 
 .ProcessEntityPlatformVisible
-  lda jumpedthisframe
-  beq NoPlatformShiftToInVisible
-
+  lda framecounter
+  bne NoPlatformShiftToInVisible
   lda entitiesxpos, x 
   sta variable1
   lda entitiesypos, x 
@@ -1333,9 +1447,8 @@ rts
   jmp AnimateSprite
 
 .ProcessEntityPlatformInvisible
-  lda jumpedthisframe
-  beq NoPlatformShiftToVisible
-
+  lda framecounter
+  bne NoPlatformShiftToVisible
   lda entitiesxpos, x 
   sta variable1
   lda entitiesypos, x 
@@ -1407,6 +1520,7 @@ rts
 
 
 .PlayerEnterStateDiving
+  jsr ResetGravity
   lda #PLAYERANIMATIONDIVING
   jsr InitAnimation
   ldy #ACTIONSETDIVING
@@ -1419,18 +1533,21 @@ rts
 
   jsr ZeroYVelocity
 
-  lda entitiesfliphorizontally, x 
-  bne divingnoflip
+  lda entitiesvxhi, x 
+  bmi divingnoflip
   lda #DIVEFORCERIGHTLO
   sta entitiesvxlo, x
   lda #DIVEFORCERIGHTHI
   sta entitiesvxhi, x 
+  lda #$00
+  sta entitiesfliphorizontally, x 
   rts
   .divingnoflip
   lda #DIVEFORCELEFTLO
   sta entitiesvxlo,x
   lda #DIVEFORCELEFTHI 
   sta entitiesvxhi, x 
+  inc entitiesfliphorizontally, x 
   rts
 
 
@@ -1445,20 +1562,20 @@ rts
   lda entitiesxpos, x
   cmp #$f8
   bcc norightexit
-    lda #$09
+    lda #$10
     sta entitiesxpos, x
-    lda #1
+    lda #$01
     bpl EndScreenExitCheck ; always branches
   .norightexit
   cmp #$08
   bcs noleftexit
-    lda #$f7
+    lda #$e8
     sta entitiesxpos, x
     lda #$02
     bpl EndScreenExitCheck
   .noleftexit
   lda entitiesypos, x
-  cmp #$fb
+  cmp #$f7
   bcc nodownexit
     lda #$09
     sta entitiesypos, x
@@ -1467,14 +1584,74 @@ rts
   .nodownexit
   cmp #$08
   bcs EndScreenExitCheckEarly
-    lda #$f7
+    lda #$f6
     sta entitiesypos, x
+    lda #$fc
+    sta entitiesvyhi, x 
     lda #$04
+    bne EndScreenExitCheck
   .EndScreenExitCheckEarly
   rts
 .EndScreenExitCheck
-  sta triggermapchange
+  ; sta triggermapchange
+
+.CheckForMapChange
+  ; lda triggermapchange
+  beq nomapchange
+    tay 
+    lda #$00
+    sta triggermapchange
+    lda MapChangeFunctionsHi, y 
+    pha 
+    lda MapChangeFunctionsLo, y 
+    pha 
+  .nomapchange
 rts
+
+.IncWith16OverFlowCheck
+  sta scratch1
+  inc scratch1
+  lda #16
+  bit scratch1
+  beq No16OverFlow
+  lda #00
+  rts
+  .No16OverFlow
+  lda scratch1
+rts
+
+.DecWith16UnderFlowCheck
+  sta scratch1
+  dec scratch1
+  bpl No16UnderFlow
+  lda #15
+  rts
+  .No16UnderFlow
+  lda scratch1
+rts
+
+.MapChangeNone ; never called
+.MapChangeLeft
+  lda mapposx
+  jsr DecWith16UnderFlowCheck
+  sta mapposx
+  bpl EndMapChange ;always branch
+.MapChangeRight
+  lda mapposx
+  jsr IncWith16OverFlowCheck
+  sta mapposx
+  bpl EndMapChange ;always branch
+.MapChangeUp
+  lda mapposy
+  jsr DecWith16UnderFlowCheck
+  sta mapposy
+  bpl EndMapChange ;always branch
+.MapChangeDown
+  lda mapposy
+  jsr IncWith16OverFlowCheck
+  sta mapposy
+  .EndMapChange
+  jmp ReloadScreen
 
 .GetEntity ; returns first entity found of a given type
   ; target entity in a.
@@ -1622,5 +1799,17 @@ rts
   lda #$00
   sta framecounter
   .NoFrameCountReset
+
+  jsr CleanUpInput
+
 rts
 
+;;; Obstacles 
+
+;;; Timed platforms
+;;; Jump switch platforms
+;;; Bouncing spikes vertical/horizontal
+;;; kill floor
+;;; kill wall
+;;; jump pad
+;;; conveyor l/r

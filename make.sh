@@ -1,0 +1,1 @@
+wine beebasm -i init.asm -do crux.ssd -boot game 

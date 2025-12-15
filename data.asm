@@ -95,45 +95,15 @@ align &0100
   .MetaTileBrick4 ;30
   equb 63,61,63,61
   equb 1,1,1,1
-
-.EmptyDataEntry
-
-.StaticSpritesLo
-  equb <StaticCrystal1
-  equb <StaticCrystal2
-  equb <StaticDoor1
-  equb <StaticDoor2
-  equb <StaticDoor3
-  equb <StaticDoor4
-  equb <StaticDoor5
-  equb <StaticDoor6
-  equb <StaticDoor7
-  equb <StaticDoor8
-  equb <InvisPlatform
-  equb <VisPlatform
-.StaticSpritesHi
-  equb >StaticCrystal1;0
-  equb >StaticCrystal2;1
-  equb >StaticDoor1;2
-  equb >StaticDoor2;3
-  equb >StaticDoor3;4
-  equb >StaticDoor4;5
-  equb >StaticDoor5;6
-  equb >StaticDoor6;7
-  equb >StaticDoor7;8
-  equb >StaticDoor8;9
-  equb >InvisPlatform;10
-  equb >VisPlatform;11
+  .MetaTileConveyorLeft ;31
+  equb 51,51,1,1
+  equb %00001001,%00001001,1,1
+  .MetaTileConveyorRight ;32
+  equb 52,52,1,1
+  equb %00000101,%00000101,1,1
 
 .StaticEntityInteractionsLo
   ; equb <EmptyDataEntry-1
-  ; equb <InteractionPrintTablet-1
-  ; equb <InteractionPrintTablet-1
-  ; equb <InteractionPrintTablet-1
-  ; equb <InteractionPrintTablet-1
-  ; equb <InteractionPrintTablet-1
-  ; equb <InteractionPrintTablet-1
-  ; equb <InteractionPrintTablet-1
   ; equb <InteractionPrintTablet-1
 .StaticEntityInteractionsHi
   ; equb >EmptyDataEntry
@@ -157,320 +127,34 @@ align &0100
 
 
 
-.StaticTablet1
-  equw TilePatternTablet1
-  equw TilePatternTablet2
-  equw TilePatternTablet3
-  equw TilePatternTablet4
+; .StaticTablet1
+;   equw TilePatternTablet1
+;   equw TilePatternTablet2
+;   equw TilePatternTablet3
+;   equw TilePatternTablet4
 
-.StaticTorchBig1
-  equw TilePatternTorchBig1
-  equw TilePatternTorchBig2
-  equw TilePatternTorchBig3
-  equw TilePatternTorchBig4
-.StaticTorchBig2
-  equw TilePatternTorchBig5
-  equw TilePatternTorchBig6
-  equw TilePatternTorchBig7
-  equw TilePatternTorchBig8
+; .StaticTorchBig1
+;   equw TilePatternTorchBig1
+;   equw TilePatternTorchBig2
+;   equw TilePatternTorchBig3
+;   equw TilePatternTorchBig4
+; .StaticTorchBig2
+;   equw TilePatternTorchBig5
+;   equw TilePatternTorchBig6
+;   equw TilePatternTorchBig7
+;   equw TilePatternTorchBig8
 
-.GameStatesLo
-  equb <GameStateTitle-1
-  equb <GameStatePlaying-1
-  equb <GameStatePaused-1
-  equb <GameStateDisplayingText-1
-
-.GameStatesHi
-  equb >GameStateTitle
-  equb >GameStatePlaying
-  equb >GameStatePaused
-  equb >GameStateDisplayingText
-
-.InitGameStatesLo
-  equb <InitGameStateTitle-1
-  equb <InitGameStatePlaying-1
-  equb <InitGameStatePaused-1
-  equb <InitGameStateDisplayingText-1
-
-
-.InitGameStatesHi
-  equb >InitGameStateTitle 
-  equb >InitGameStatePlaying
-  equb >InitGameStatePaused
-  equb >InitGameStateDisplayingText
-
-.InputActionsLo
-  equb <ActionNoAction-1
-  equb <ActionMoveLeft-1
-  equb <ActionMoveRight-1
-  equb <ActionJump-1
-  equb <ActionDoubleJump-1
-  equb <ActionWallJump-1
-  equb <ActionInvertGravity-1
-  equb <ActionDive-1
-  equb <ActionInteract-1
-  equb <ActionViewMem-1
-
-.InputActionsHi
-  equb >ActionNoAction
-  equb >ActionMoveLeft
-  equb >ActionMoveRight
-  equb >ActionJump
-  equb >ActionDoubleJump
-  equb >ActionWallJump
-  equb >ActionInvertGravity
-  equb >ActionDive
-  equb >ActionInteract
-  equb >ActionViewMem
-
-
-
-.MetaTileListHi
-  equb >MetaTileEmpty ;0
-  equb >MetaTileSolid;1
-  equb >MetaTileCorner1;2
-  equb >MetaTileCorner2;3
-  equb >MetaTileCorner3;4
-  equb >MetaTileCorner4;5
-  equb >MetaTileDottedCorner1;6
-  equb >MetaTileDottedCorner2;7
-  equb >MetaTileDottedCorner3;8
-  equb >MetaTileDottedCorner4;9
-  equb >MetaTileCrystal1;10
-  equb >MetaTileCrystal2;11
-  equb >MetaTileHalfTop;12
-  equb >MetaTileHalfBottom;13
-  equb >MetaTileLadder;14
-  equb >MetaTileDotted
-  equb >MetaTileBouncePad
-  equb >MetaTileBridgeLeft;17
-  equb >MetaTileBridgeRight;18
-  equb >MetaTileEarth ;19
-  equb >MetaTileEarthLeft ;20
-  equb >MetaTileEarthRight ;21
-  equb >MetaTileEarthCentre;22
-  equb >MetaTileEarthFadeOut1;23
-  equb >MetaTileEarthFadeOut2;24
-  equb >MetaTileEarthFadeOut3;25
-  equb >MetaTileEarthFadeOut4;26
-  equb >MetaTileBrick1 ;27
-  equb >MetaTileBrick2 ;28
-  equb >MetaTileBrick3 ;29
-  equb >MetaTileBrick4 ;30
-
-.TilePatternsHi
-  equb >TilePatternEmpty ;00
-  equb >TilePatternSolid;01
-  equb >TilePatternSolidEdge1;02
-  equb >TilePatternSolidEdge2;03
-  equb >TilePatternSolidEdge3;04
-  equb >TilePatternSolidEdge4;05
-  equb >TilePatternDottedEdge1;06
-  equb >TilePatternDottedEdge2;07
-  equb >TilePatternDottedEdge3;08
-  equb >TilePatternDottedEdge4;09
-  equb >TilePatternCrystal1;10
-  equb >TilePatternCrystal2;11
-  equb >TilePatternCrystal3;12
-  equb >TilePatternCrystal4;13
-  equb >TilePatternCrystal5;14
-  equb >TilePatternCrystal6;15
-  equb >TilePatternCrystal7;16
-  equb >TilePatternCrystal8;17
-  equb >TilePatternTablet1;18
-  equb >TilePatternTablet2;19
-  equb >TilePatternTablet3;20
-  equb >TilePatternTablet4;21
-  equb >TilePatternLadderL;22
-  equb >TilePatternLadderR;23
-  equb >TilePatternBouncePad;24
-  equb >TilePatternArch1;25
-  equb >TilePatternArch2;26
-  equb >TilePatternArch3;27
-  equb >TilePatternArch4;28
-  equb >TilePatternTorchBig1;29
-  equb >TilePatternTorchBig2;30
-  equb >TilePatternTorchBig3;31
-  equb >TilePatternTorchBig4;32
-  equb >TilePatternTorchBig5;33
-  equb >TilePatternTorchBig6;34
-  equb >TilePatternTorchBig7;35
-  equb >TilePatternTorchBig8;36
-  equb >TilePatternEarth1;37
-  equb >TilePatternEarth2;38
-  equb >TilePatternEarth3;39
-  equb >TilePatternEarth4;40
-  equb >TilePatternEarth5;41
-  equb >TilePatternEarth6;42
-  equb >TilePatternEarth7;43
-  equb >TilePatternEarth8;44
-  equb >TilePatternEarth9;45
-  equb >TilePatternEarth10;46
-  equb >TilePatternEarth11;47
-  equb >TilePatternEarth12;48
-  equb >TilePatternEarth13;49
-  equb >TilePatternEarth14;50
-  equb >TilePatternChain1;51
-  equb >TilePatternChain2;52
-  equb >TilePatternChain3;53
-  equb >TilePatternDoor1;54
-  equb >TilePatternDoor2;55
-  equb >TilePatternDoor3;56
-  equb >TilePatternDoor4;57
-  equb >TilePatternBrick1;58
-  equb >TilePatternBrick2;59
-  equb >TilePatternBrick3;60
-  equb >TilePatternBrick4;61
-  equb >TilePatternBrick5;62
-  equb >TilePatternBrick6;63
-
-.SpritesLo
-  equb <SpritePlayerRightRun1;0
-  equb <SpritePlayerRightRun2;1
-  equb <SpritePlayerRightRun3;2
-  equb <SpritePlayerIdle1;3
-  equb <SpritePlayerIdle2;4
-  equb <SpritePlayerLadder1;5
-  equb <SpritePlayerLadder2;6
-  equb <SpritePlayerJumping1;7
-  equb <SpritePlayerJumping2;8
-  equb <SpritePlayerFalling1;9
-  equb <SpritePlayerFalling2;0a/10
-  equb <SpritePlayerWallSliding ;0b/11
-  equb <SpritePlayerDiving;0c/12
-  equb <SpritePlayerSliding;0d/13
-  equb <SPProjectile1;14
-  equb <SPProjectile2 ;15
-  equb <SPProjectile3;16
-  equb <SPProjectile4;17
-  equb <SpriteFluid1;;18
-  equb <SpriteFluid2;19
-  equb <SpriteFluid3;20
-  equb <SpriteFluid4;21
-  equb <SpriteSpike1;22
-  equb <SpriteSpike2;22
-  equb <SpriteSpike3;22
-  equb <SpriteSpike4;22
-  equb <SpriteSpike5;22
-  equb <SpriteSpike6;22
-  equb <SpriteTeleportal1
-  equb <SpriteTeleportal2
-  equb <SpriteKey1
-  equb <SpriteKey2
-
-.SpritesHi
-  equb >SpritePlayerRightRun1;0
-  equb >SpritePlayerRightRun2;1
-  equb >SpritePlayerRightRun3;2
-  equb >SpritePlayerIdle1;3
-  equb >SpritePlayerIdle2;4
-  equb >SpritePlayerLadder1;5
-  equb >SpritePlayerLadder2;6
-  equb >SpritePlayerJumping1;7
-  equb >SpritePlayerJumping2;8
-  equb >SpritePlayerFalling1;9
-  equb >SpritePlayerFalling2;0a/10
-  equb >SpritePlayerWallSliding ;0b/11
-  equb >SpritePlayerDiving;0c/12
-  equb >SpritePlayerSliding;0d/13
-  equb >SPProjectile1;14
-  equb >SPProjectile2 ;15
-  equb >SPProjectile3;16
-  equb >SPProjectile4;17
-  equb >SpriteFluid1;;18
-  equb >SpriteFluid2;19
-  equb >SpriteFluid3;20
-  equb >SpriteFluid4;21
-  equb >SpriteSpike1;22
-  equb >SpriteSpike2;23
-  equb >SpriteSpike3;24
-  equb >SpriteSpike4;25
-  equb >SpriteSpike5;26
-  equb >SpriteSpike6;27
-  equb >SpriteTeleportal1;28
-  equb >SpriteTeleportal2;29
-  equb >SpriteKey1;30
-  equb >SpriteKey2;31
-.AnimationsLo
-  equb <AnimationPlayerIdle;0
-  equb <AnimationPlayerWalkRight;1
-  equb <AnimationPlayerJumpRight;2
-  equb <AnimationPlayerLandRight;3
-  equb <AnimationPlayerClimbLadder;4
-  equb <AnimationPlayerJumping;5
-  equb <AnimationPlayerFalling;6
-  equb <AnimationPlayerWallSliding;7
-  equb <AnimationDiving;8
-  equb <AnimationSliding;9
-  equb <AnimationCrystal2;10
-  equb <AnimationDoorOpen;11
-  equb <AnimationDoorClose;12
-  equb <AnimationDoorIdleOpen;13
-  equb <AnimationDoorIdleClosed;14
-  equb <AnimationInvisPlatform ;15
-  equb <AnimationInvisPlatform ;16
-  equb <AnimationVisPlatform;17
-  equb <AnimationFluid;18
-  equb <AnimationSpikeIdle;19
-  equb <AnimationSpikeRaise;20
-  equb <AnimationSpikeRotate;21
-  equb <AnimationSpikeLower ;22
-  equb <AnimationProjectile ;23
-  equb <AnimationKey ;24
-  equb <AnimationTeleportal;25
-  equb <AnimationCrawler;26
-
-.AnimationsHi
-  equb >AnimationPlayerIdle;0
-  equb >AnimationPlayerWalkRight;1
-  equb >AnimationPlayerJumpRight;2
-  equb >AnimationPlayerLandRight;3
-  equb >AnimationPlayerClimbLadder;4
-  equb >AnimationPlayerJumping;5
-  equb >AnimationPlayerFalling;6
-  equb >AnimationPlayerWallSliding;7
-  equb >AnimationDiving;8
-  equb >AnimationSliding;9
-  equb >AnimationCrystal2;10
-  equb >AnimationDoorOpen;11
-  equb >AnimationDoorClose;12
-  equb >AnimationDoorIdleOpen ;13
-  equb >AnimationDoorIdleClosed ;14 
-  equb >AnimationInvisPlatform ;15
-  equb >AnimationInvisPlatform ;16 
-  equb >AnimationVisPlatform;17
-  equb >AnimationFluid;18
-  equb >AnimationSpikeIdle;19
-  equb >AnimationSpikeRaise;20
-  equb >AnimationSpikeRotate;20
-  equb >AnimationSpikeLower ;22
-  equb >AnimationProjectile ;23
-  equb >AnimationKey
-  equb >AnimationTeleportal;25
-  equb >AnimationCrawler;26
-
-.DrawFunctionListLo
-  equb <DrawAlignedSprite
-  equb <DrawUnAlignedSpriteX
-  equb <DrawUnAlignedSpriteY
-  equb <DrawUnAlignedSpriteXY
-.DrawFunctionListHi
-  equb >DrawAlignedSprite
-  equb >DrawUnAlignedSpriteX
-  equb >DrawUnAlignedSpriteY
-  equb >DrawUnAlignedSpriteXY
-  
 
 .EntityCollisionInitial
 
   equb COLLISIONNONE ; dummy
   equb COLLISIONNONE ; player
-  equb COLLISIONNONE ;crystal
+  equb 6 ;crystal
   equb COLLISIONNONE ; door open
   equb COLLISIONNONE ;door closed
   equb COLLISIONNONE ; platform invis
   equb COLLISIONNONE ; platform vis
-  equb COLLISIONADDE ; fluid vial
+  equb COLLISIONADDE ; e tank add
   equb COLLISIONKILL ; spike trap
   equb COLLISIONKILL ;proj u
   equb COLLISIONKILL;proj d
@@ -483,13 +167,20 @@ align &0100
   equb COLLISIONKILL ; crawler
   equb COLLISIONBOUNCE ; BOUNCER
   equb COLLISIONNONE ; bouncer disabled
+  equb COLLISIONNONE ; bouncer disabled
+  equb COLLISIONNONE ; bouncer disabled
+  equb COLLISIONNONE ; bouncer disabled
+  equb COLLISIONNONE ; bouncer disabled
+  equb COLLISIONNONE ; bouncer disabled
+
+
 
 .EntityStatesInitial
   equb 0 ; dummy
   equb 1 ; player
   equb STATEANIMATING ;crystal
-  equb STATEDOOROPEN ; door open
-  equb STATEDOORCLOSED ;door closed
+  equb STATEDOORINIT ; door open
+  equb STATEDOORINIT ;door closed
   equb STATEJUMPPLATFORMINVIS ; platform invis
   equb STATEJUMPPLATFORMVIS ; platform vis
   equb STATEANIMATING ; fluid vial
@@ -505,13 +196,18 @@ align &0100
   equb 22 ; crawler
   equb 24 ; Bouncer
   equb 25 ; bouncer disabled
+  equb STATEANIMATING
+  equb STATEANIMATING
+  equb STATEANIMATING
+  equb STATEANIMATING
+  equb STATEANIMATING
 
 .EntityAnimationInitial
   equb 0
   equb 1
   equb 10
   equb 11
-  equb 15
+  equb 14
   equb 16
   equb 17
   equb 18
@@ -524,169 +220,52 @@ align &0100
   equb 24;key
   equb 18 ; hbounce
   equb 18 ; vbounce
-  equb 26;crawler 16
+  equb 26;crawler 
   equb 26 ; bouncer
-  equb 26
+  equb 26 ; 19
+  equb 0
+  equb 29
 
-.EntityStatesLo
-  equb <GenericInit-1;0
-  equb <ProcessPlayer-1;1
-  equb <ProcessPlayerWallSliding-1;2
-  equb <ProcessPlayerJumping-1;3
-  equb <ProcessPlayerFalling-1;4
-  equb <ProcessPlayerDiving-1;5
-  equb <ProcessPlayerSliding-1;6
-  equb <ProcessPlayerOnLadder-1;7
-  equb <ProcessEntityAnimate-1;8
-  equb <ProcessEntityDoorOpen-1;9
-  equb <ProcessEntityDoorClosed-1;10
-  equb <ProcessEntityProjectile-1;11
-  equb <ProcessEntityPlatformVisible-1;12
-  equb <ProcessEntityPlatformInvisible-1;13
-  equb <ProcessEntitySpikeTrap-1 ;14
-  equb <ProcessEntitySpikeTrapUp-1 ;15
-  equb <ProcessEntityProjectileUpInit-1 ;16
-  equb <ProcessEntityProjectileDownInit-1 ;17
-  equb <ProcessEntityProjectileLeftInit-1 ;18
-  equb <ProcessEntityProjectileRightInit-1 ;19
-  equb <ProcessHBouncer-1;20
-  equb <ProcessVBouncer-1;21
-  equb <ProcessCrawlerRight-1;22
-  equb <ProcessCrawlerDown-1;23
-  equb <ProcessBouncerEnabled-1;24
-  equb <ProcessBouncerDisabled-1;25
+.KeysToRead
+  equb %10100001;w
+  equb %11010001;s
+  equb %11000001;a
+  equb %10110010;d
+  equb %11000110;k
+  equb %11010110;l
+  equb %10110111;p
+  equb %11001001;return
 
-.EntityStatesHi
-  equb >GenericInit;0
-  equb >ProcessPlayer;1
-  equb >ProcessPlayerWallSliding;2
-  equb >ProcessPlayerJumping;3
-  equb >ProcessPlayerFalling;4
-  equb >ProcessPlayerDiving;5
-  equb >ProcessPlayerSliding;6
-  equb >ProcessPlayerOnLadder;7
-  equb >ProcessEntityAnimate;8
-  equb >ProcessEntityDoorOpen;9
-  equb >ProcessEntityDoorClosed;10
-  equb >ProcessEntityProjectile;11
-  equb >ProcessEntityPlatformVisible;12
-  equb >ProcessEntityPlatformInvisible;13
-  equb >ProcessEntitySpikeTrap;14
-  equb >ProcessEntitySpikeTrapUp ;15
-  equb >ProcessEntityProjectileUpInit ;16
-  equb >ProcessEntityProjectileDownInit ;17
-  equb >ProcessEntityProjectileLeftInit ;18
-  equb >ProcessEntityProjectileRightInit ;19
-  equb >ProcessHBouncer;20
-  equb >ProcessVBouncer;21
-  equb >ProcessCrawlerRight;22
-  equb >ProcessCrawlerDown;23
-  equb >ProcessBouncerEnabled;24
-  equb >ProcessBouncerDisabled ;25
-
-.PlayerNewStateFunctionsLo
-  equb <EmptyDataEntry-1
-  equb <PlayerEnterStateOnFloor-1
-  equb <PlayerEnterStateWallSliding-1
-  equb <PlayerEnterStateJumping-1
-  equb <PlayerEnterStateFalling-1
-  equb <PlayerEnterStateDiving-1
-  equb <PlayerEnterStateSliding-1
-  equb <PlayerEnterStateOnLadder-1
-  equb <PlayerEnterStateBouncing-1
-.PlayerNewStateFunctionsHi
-  equb >EmptyDataEntry
-  equb >PlayerEnterStateOnFloor
-  equb >PlayerEnterStateWallSliding
-  equb >PlayerEnterStateJumping 
-  equb >PlayerEnterStateFalling
-  equb >PlayerEnterStateDiving
-  equb >PlayerEnterStateSliding
-  equb >PlayerEnterStateOnLadder
-  equb >PlayerEnterStateBouncing
-
-.CollisionFuncsLo
-  equb <SpriteCollideNone-1
-  equb <SpriteCollideKillPlayer-1
-  equb <SpriteCollideETank-1
-  equb <SpriteCollideTeleport-1
-  EQUB <SpriteCollideKey-1
-  equb <SpriteCollideBounce-1
-.CollisionFuncsHi
-  equb >SpriteCollideNone
-  equb >SpriteCollideKillPlayer
-  equb >SpriteCollideETank
-  equb >SpriteCollideTeleport
-  EQUB >SpriteCollideKey
-  equb >SpriteCollideBounce
-
-.DictionaryListLo
-  equb <DictionaryStringThe
-  equb <DictionaryStringYou
-  equb <DictionaryStringIt
-
-.DictionaryListHi
-  equb >DictionaryStringThe
-  equb >DictionaryStringYou
-  equb >DictionaryStringIt
-
-.PaletteListLo
-  equb <PaletteDefault
-  equb <PaletteInverted
-  equb <Palette2
-  equb <Palette3
-  equb <Palette4
-  equb <Palette5
-  equb <Palette6
-  equb <Palette7
-.PaletteListHi
-  equb >PaletteDefault
-  equb >PaletteInverted
-  equb >Palette2
-  equb >Palette3
-  equb >Palette4
-  equb >Palette5
-  equb >Palette6
-  equb >Palette7
-;sound
-.SoundListLo
-  equb <Sound1
-  equb <Sound2
-  equb <Sound3
-.SoundListHi
-  equb >Sound1
-  equb >Sound2
-  equb >Sound3
-
-
-.StaticEntitySpritesNPC
-  equb 1,1
-  equb %00000000,0
-  equw StaticNPC1
-  equw StaticNPC2
-.StaticEntitySpritesCrystal
-  equb 2,2
-  equb %00000010,0 ; collision: lo-hi: destroy player, eject player
-  equw StaticCrystal1
-  equw StaticCrystal2
-.StaticEntitySpritesTablet
-  equb 2,2
-  equb %00000000,0
-  equw StaticTablet1
-.StaticEntityTorchBig
-  equb 2,2
-  equb %00000000,0
-  equw StaticTorchBig1
-  equw StaticTorchBig2
+; .StaticEntitySpritesNPC
+;   equb 1,1
+;   equb %00000000,0
+;   equw StaticNPC1
+;   equw StaticNPC2
+; .StaticEntitySpritesCrystal
+;   equb 2,2
+;   equb %00000010,0 ; collision: lo-hi: destroy player, eject player
+;   equw StaticCrystal1
+;   equw StaticCrystal2
+; .StaticEntitySpritesTablet
+;   equb 2,2
+;   equb %00000000,0
+;   equw StaticTablet1
+; .StaticEntityTorchBig
+;   equb 2,2
+;   equb %00000000,0
+;   equw StaticTorchBig1
+;   equw StaticTorchBig2
 
   ;Sound data format:
   ;Channel,Amplitude(on/off on the electron),Pitch,Duration, 2 bytes per parameter
-  ;channel: 0 = noise,1 = tone, ignore 2/3 for the electron
-  ;amplitude: negative = on, 0 = off, 1-16 = select envelope
-  ;pitch: msb not used. #52 = middle c. Each step is a quarter semitone change. Becomes off pitch > 100
+  ; channel: 0 = noise,1 = tone, 
+  ;ignore 2/3 for the electron
+  ; amplitude: negative = on, 0 = off, 1-16 = select envelope
+  ; pitch: msb not used. 
+  ;#52 = middle c. Each step is a quarter semitone change. Becomes off pitch > 100
   ;duration. 1 step = 50mS
 .Sound1
-  equb $01,$00,$01,$00,52,$00,$03,$00
+  equb $10,$00,$01,$00,52,$00,$03,$00
 .Sound2
   equb $01,$00,$02,$00,$52,$00,$03,$00
 .Sound3
@@ -696,19 +275,32 @@ align &0100
 .PaletteDefault
   equb 0,WHITE
 .PaletteInverted
-  equb 1,WHITE
+  equb WHITE,0
 .Palette2
-  equb 2,WHITE
+  equb 0,RED
 .Palette3
-  equb 3,WHITE
+  equb 0,YELLOW
 .Palette4
-  equb 4,WHITE
+  equb 0,GREEN
 .Palette5
-  equb 5,WHITE
+  equb 0,BLUE
 .Palette6
-  equb 6,WHITE
+  equb 0,CYAN
 .Palette7
-  equb 7,WHITE
+  equb 0,MAGENTA
+.Palette8
+  equb 0,FLASHINGBLACKWHITE
+.Palette9
+  equb 0,FLASHINGREDCYAN
+.Palette10
+  equb 0,FLASHINGGREENMAGENTA
+.Palette11
+  equb 0,FLASHINGYELLOWBLUE
+.Palette12
+  equb 0,FLASHINGBLUEYELLOW
+.Palette13
+  equb 0,FLASHINGMAGENTAGREEN
+
 .AnimationCrystal
   equb 5,0,1,ANICONTROLBYTELOOP
 .AnimationCrystal2
@@ -740,9 +332,13 @@ align &0100
 .AnimationKey
   equb 10,30,31,21,ANICONTROLBYTEFLIP,31,ANICONTROLBYTELOOP
 .AnimationTeleportal
-  equb 5,28,ANICONTROLBYTEFLIP,28,ANICONTROLBYTEFLIP,29,ANICONTROLBYTEFLIP,29,ANICONTROLBYTEFLIP,ANICONTROLBYTELOOP
+  equb 5,28,ANICONTROLBYTEFLIP,28,ANICONTROLBYTEFLIP,29,ANICONTROLBYTEFLIP,29,ANICONTROLBYTEFLIP,14,ANICONTROLBYTELOOP
 .AnimationCrawler
   equb 10,8,9,ANICONTROLBYTELOOP
+.AnimationsPlayerFlipClockWise
+  equb 4,14,15,ANICONTROLBYTEFLIP,15,14,ANICONTROLBYTEFLIP,14,15,ANICONTROLBYTEFLIP,15,14,ANICONTROLBYTEFLIP,ANICONTROLBYTELOOP
+.AnimationsPlayerFlipAnitClockWise
+  equb 2,14,15,ANICONTROLBYTEFLIP,15,14,ANICONTROLBYTEFLIP,14,15,ANICONTROLBYTEFLIP,15,ANICONTROLBYTELOOP
 .AnimationTablet
   equb 120,0,ANICONTROLBYTELOOP
 
@@ -766,74 +362,204 @@ align &0100
   equb 120,13,ANICONTROLBYTELOOP
 .AnimationLadderClimbing
   equb 4,5,6,ANICONTROLBYTELOOP
+.AnimationTorchBig
+  equb 25,12,13,ANICONTROLBYTELOOP
 
-.DefaultScreenMMTsLo
-  equb <DefaultScreenOpenAir
-  equb <DefaultScreenBrickClosed
-  equb <DefaultScreenBrickVShaft
-  equb <DefaultScreenBrickHShaft
-.DefaultScreenMMTsHi
-  equb >DefaultScreenOpenAir
-  equb >DefaultScreenBrickClosed
-  equb >DefaultScreenBrickVShaft
-  equb >DefaultScreenBrickHShaft
+
 
 .DefaultScreenOpenAir
-  equb %0000_1111,0
+  equb %0000_1111,14
   equb $ff
-.DefaultScreenBrickClosed
-  equb %0000_0000,24
-  equb %0000_1111,25
-  equb %1111_0000,26
+.DefaultScreenClosed
+  equb %0000_0000,MMTSOLIDWALL4
+  equb %0011_0000,MMTSOLIDWALL4
+  equb %1001_0000,MMTSOLIDWALL4
+  equb %1011_0000,MMTSOLIDWALL4
   equb %0000_0000,27
   equb $ff
 .DefaultScreenBrickVShaft
-  equb %1111_0000,26
-  equb %0000_0000,27
+  equb %0000_0000,MMTBRICKWALLL
+  equb %1111_0000,MMTBRICKWALLR
+  equb %0000_0111,MMTEMPTYWALL2
+  equb %1111_0111,MMTEMPTYWALL2
+
   equb $ff
 .DefaultScreenBrickHShaft
   equb %0000_0000,24
   equb %0000_1111,25
   equb $ff
+.DefaultScreenFilled
+  equb %0000_0000,MMTSOLIDFLOOR16
+  equb %0000_0001,MMTSOLIDFLOOR16
+  equb %0000_0010,MMTSOLIDFLOOR16
+  equb %0000_0011,MMTSOLIDFLOOR16
+  equb %0000_0100,MMTSOLIDFLOOR16
+  equb %0000_0101,MMTSOLIDFLOOR16
+  equb %0000_0110,MMTSOLIDFLOOR16
+  equb %0000_0111,MMTSOLIDFLOOR16
+  equb %0000_1000,MMTSOLIDFLOOR16
+  equb %0000_1001,MMTSOLIDFLOOR16
+  equb %0000_1010,MMTSOLIDFLOOR16
+  equb %0000_1011,MMTSOLIDFLOOR16
+  equb %0000_1100,MMTSOLIDFLOOR16
+  equb %0000_1101,MMTSOLIDFLOOR16
+  equb %0000_1110,MMTSOLIDFLOOR16
+  equb %0000_1111,MMTSOLIDFLOOR16
+  equb $ff
+.DefaultScreenCorridorH
+  equb %0000_0000,MMTSOLIDFLOOR16
+  equb %0000_0001,MMTSOLIDFLOOR16
+  equb %0000_0010,MMTSOLIDFLOOR16
+  equb %0000_0011,MMTSOLIDFLOOR16
+  equb %0000_0100,MMTSOLIDFLOOR16
+  equb %0000_0101,MMTSOLIDFLOOR16
+  equb %0000_0110,MMTBRICKCEILING16
+  equb %0000_1001,MMTBRICKFLOOR16
+  equb %0000_1010,MMTSOLIDFLOOR16
+  equb %0000_1011,MMTSOLIDFLOOR16
+  equb %0000_1100,MMTSOLIDFLOOR16
+  equb %0000_1101,MMTSOLIDFLOOR16
+  equb %0000_1110,MMTSOLIDFLOOR16
+  equb %0000_1111,MMTSOLIDFLOOR16
+  equb $ff
+.DefaultScreenCorridorV
+  equb %0000_0000,MMTSOLIDWALL16
+  equb %0001_0000,MMTSOLIDWALL16
+  equb %0010_0000,MMTSOLIDWALL16
+  equb %0011_0000,MMTSOLIDWALL16
+  equb %0100_0000,MMTSOLIDWALL16
+  equb %0101_0000,MMTSOLIDWALL16
+  equb %0110_0000,MMTSOLIDWALL16
+  equb %1001_0000,MMTSOLIDWALL16
+  equb %1010_0000,MMTSOLIDWALL16
+  equb %1011_0000,MMTSOLIDWALL16
+  equb %1100_0000,MMTSOLIDWALL16
+  equb %1101_0000,MMTSOLIDWALL16
+  equb %1110_0000,MMTSOLIDWALL16
+  equb %1111_0000,MMTSOLIDWALL16
+  equb $ff
+
 ; Screen data format:
 ;b1 4msb == palette
 ;b1 4lsb == basic template type for the walls
 ;b2 4ms 
 ;b3-ff
 
-align $08
-  equb $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
 ;Screens
-  .Screen0
-    equb %0000_0000 ; palette/defaultlayout
+  .Screen1_1
+    equb PALETTEBLACKWHITE + DEFAULTSCREENCORRIDORH ; palette/defaultlayout
+    ; equb 0 + DEFAULTSCREENCORRIDORH
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
-    equb %0010_1100,22
-    equb %1011_1100,22
+    equb $ff
+    ;entities
+    equb $ff
+  .Screen1_2
+    equb PALETTEBLACKRED + %0000_0100 ; palette/defaultlayout
+    equb %0000_0000 ; npc string/tabletstring
+    ;tile structures
+    equb %1000_1000,MMTEMPTYFLOOR8
     equb $ff
     ; entities
-    equb %0011_1011,18
-    ; equb %0111_0011,18
-    equb %1011_1011,14
-    equb %0000_1110,3+128
-    equb %1111_1110,3+128
     equb $ff
 
-  .Screen1
-    equb %0000_0011 ; palette/defaultlayout
+  .Screen1_3
+    equb PALETTEBLACKYELLOW + %0000_0100 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
+    equb %0000_1000,MMTEMPTYFLOOR8
     equb $ff
     ; entities
-    equb %0000_1110,3+128
-    equb %1111_1110,3+128
+    equb $ff
+
+  .Screen1_4
+    equb PALETTEBLACKGREEN + %0000_0100 ; palette/defaultlayout
+    equb %0000_0000 ; npc string/tabletstring
+    ;tile structures
+    equb %0000_1110,MMTEMPTYFLOOR5
+    equb %1011_1110,MMTEMPTYFLOOR5
+    equb $ff
+    ; entities
     equb $ff
 
 
-  .Screen2
-    equb %0000_0011 ; palette/defaultlayout
+  ;transit h1
+  .Screen1_5
+    equb PALETTEBLACKBLUE + DEFAULTSCREENCORRIDORH ; palette/defaultlayout
+    equb %0000_0000 ; npc string/tabletstring
+    ;tile structures
+    equb $ff
+    ;entities
+    equb %0100_1000, ENTITYSPIKETRAP
+    equb %1011_1000, ENTITYSPIKETRAP
+    equb $ff
+
+  .Screen1_6
+    equb PALETTEBLACKCYAN + 0 ; palette/defaultlayout
+    ; equb %0010_0000
+    equb %0000_0000 ; npc string/tabletstring
+    ;tile structures
+    equb $ff
+    ;entities
+    equb $ff
+    ; equb %0000_0100 ; palette/defaultlayout
+    ; equb %0000_0000 ; npc string/tabletstring
+    ; ;tile structures
+    ; equb %0100_1110,19
+    ; equb %1000_1110,19
+    ; equb $ff
+    ; ; entities
+    ; equb $ff
+  ;transitendright
+  .Screen1_7
+    equb PALETTEBLACKMAGENTA + %0000_0000 ; palette/defaultlayout
+    equb %0000_0000 ; npc string/tabletstring
+    ;tile structures
+    equb %0110_1111,17
+    equb %0100_1110,21
+    equb %1010_1110,22
+    equb $ff
+    ; entities
+    equb %0101_1101,ENTITYTORCHLARGE+128
+    equb %1010_1101,ENTITYTORCHLARGE+128
+    equb $ff
+  .Screen1_8
+    equb PALETTEBLACKWHITE+%0000_0010 ; palette/defaultlayout
+    equb %0000_0000 ; npc string/tabletstring
+    equb $ff
+    equb $ff
+  .Screen2_1
+    equb PALETTEBLACKRED +DEFAULTSCREENCORRIDORH ; palette/defaultlayout
+    equb %0000_0000 ; npc string/tabletstring
+    ;tile structures
+    equb %0000_0111,MMTEMPTYFLOOR16
+    equb %0000_1000,MMTEMPTYFLOOR16
+    equb %1000_1001,MMTEMPTYWALL8
+    equb %0111_1001,MMTEMPTYWALL8
+    equb $ff
+    ;entities
+    equb $ff
+  .Screen2_2
+    equb PALETTEBLACKYELLOW+DEFAULTSCREENCORRIDORH ; palette/defaultlayout
+    equb %0000_0000 ; npc string/tabletstring
+    ;tile structures
+    equb %0010_0101,MMTEMPTYWALL4
+    equb %0100_0101,MMTEMPTYWALL4
+    equb %0110_0101,MMTEMPTYWALL4
+    equb %1000_0101,MMTEMPTYWALL4
+    equb %1010_0101,MMTEMPTYWALL4
+    equb %1100_0001,MMTEMPTYWALL8
+    equb %1110_0001,MMTEMPTYWALL8
+    equb %1110_0111,MMTEMPTYWALL8
+    equb %0110_1110,MMTEMPTYFLOOR8
+    equb %0110_0001,MMTEMPTYFLOOR8
+    equb %0111_0000,MMTEMPTYFLOOR4
+    equb %0111_1111,MMTEMPTYFLOOR4
+    equb $ff
+    ; entities
+    equb $ff
+  .Screen2_3
+    equb PALETTEBLACKGREEN+%0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
     equb %0010_1100,22
@@ -844,7 +570,111 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen3
+  .Screen2_4
+    equb PALETTEBLACKBLUE+DEFAULTSCREENCORRIDORH ; palette/defaultlayout
+    equb %0000_0000 ; npc string/tabletstring
+    ;tile structures
+    equb %0111_0111,MMTSOLIDFLOOR2
+    equb $ff
+    ; entities
+    equb %1000_1000,128+ENTITYDOORCLOSED
+    equb %0101_1000,ENTITYKEY
+    equb $ff
+  .Screen2_5
+    equb PALETTEBLACKCYAN+%0000_0010 ; palette/defaultlayout
+    equb %0000_0000 ; npc string/tabletstring
+    ;tile structures
+    equb %0010_1100,22
+    equb %1010_1100,22
+    equb $ff
+    ; entities
+    equb %1001_1110,16
+    equb %1010_1110,16
+    equb %1011_1110,16
+    equb $ff
+  .Screen2_6
+    equb PALETTEBLACKMAGENTA+%0000_0010 ; palette/defaultlayout
+    equb %0000_0000 ; npc string/tabletstring
+    ;tile structures
+    equb %0010_1100,22
+    equb %1010_1100,22
+    equb $ff
+    ; entities
+    equb %1001_1110,16
+    equb %1010_1110,16
+    equb %1011_1110,16
+    equb $ff
+  .Screen2_7
+    equb PALETTEBLACKWHITE+DEFAULTSCREENCORRIDORH ; palette/defaultlayout
+    equb %0000_0000 ; npc string/tabletstring
+    ;tile structures
+    equb %0000_0110,MMTEMPTYFLOOR16
+    equb %1000_0000,MMTEMPTYWALL16
+    equb %0111_0000,MMTEMPTYWALL16
+    equb %0001_1001,MMTCONVEYERLEFT4
+    equb %0101_1001,MMTCONVEYERLEFT2
+    equb %1011_1001,MMTCONVEYERRIGHT4
+    equb %1001_1001,MMTCONVEYERRIGHT2
+    equb $ff
+    ;entities
+    ; equb %0011_1000, ENTITYVBOUNCER
+    equb %0101_1000, ENTITYVBOUNCER
+    ; equb %1011_1000, ENTITYVBOUNCER
+    equb %1101_1000, ENTITYVBOUNCER
+    equb $ff
+  .Screen2_8
+    equb PALETTEBLACKRED+%0000_0010 ; palette/defaultlayout
+    equb %0000_0000 ; npc string/tabletstring
+    ;tile structures
+    equb %0000_1000, MMTEMPTYFLOOR1
+    equb %0001_1011, MMTSOLIDFLOOR1
+    equb %0001_1100, MMTSOLIDFLOOR2
+    equb %0001_1101, MMTSOLIDFLOOR4
+    equb %0001_1110, MMTSOLIDFLOOR8    
+    equb %0001_1111, MMTBRICKFLOOR16
+    equb $ff
+    equb $ff
+  .Screen3_1
+    equb PALETTEBLACKYELLOW+DEFAULTSCREENCORRIDORH ; palette/defaultlayout
+    equb %0000_0000 ; npc string/tabletstring
+    ;tile structures
+    equb %1000_0000,MMTEMPTYWALL16
+    equb %0111_0000,MMTEMPTYWALL16
+    equb $ff
+    ;entities
+    equb $ff
+  .Screen3_2
+    equb PALETTEBLACKGREEN+DEFAULTSCREENCORRIDORH ; palette/defaultlayout
+    equb %0000_0000 ; npc string/tabletstring
+    ;tile structures
+    equb %1000_0000,MMTEMPTYWALL8
+    equb %0111_0000,MMTEMPTYWALL8
+    equb %0110_1001,MMTEMPTYWALL4
+    equb %1001_1001,MMTEMPTYWALL4
+    equb %1000_1100,MMTEMPTYWALL4
+    equb %0111_1100,MMTEMPTYWALL4
+    equb $ff
+    ;entities
+    ; entities
+    equb %1000_0110,ENTITYHBOUNCER
+    ; equb %0101_1011,ENTITYVBOUNCER
+    ; equb %1010_1011,ENTITYVBOUNCER
+    ; equb %1100_1100,ENTITYVBOUNCER
+    equb $ff
+  .Screen3_3
+    equb %0000_0100 ; palette/defaultlayout
+    equb %0000_0000 ; npc string/tabletstring
+    ;tile structures
+    equb %0000_1110,20
+    equb %0110_1011,2
+    equb %1001_1011,2
+
+    equb %0100_1100,2
+    equb %1011_1100,2
+    equb $ff
+    ; entities
+    equb $ff
+  .Screen3_4
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -856,7 +686,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen4
+  .Screen3_5
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -868,7 +698,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen5
+  .Screen3_6
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -880,7 +710,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen6
+  .Screen3_7
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -892,7 +722,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen7
+  .Screen3_8
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -904,7 +734,31 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen8
+  .Screen4_1
+    equb 0+DEFAULTSCREENCORRIDORV; palette/defaultlayout
+    equb %0000_0000 ; npc string/tabletstring
+    ;tile structures
+    equb %1000_1000,MMTEMPTYFLOOR8
+    equb %1000_0111,MMTEMPTYFLOOR8
+    equb $ff
+    ;entities
+    equb $ff
+  .Screen4_2
+    equb %0000_0100 ; palette/defaultlayout
+    equb %0000_0000 ; npc string/tabletstring
+    ;tile structures
+    equb %0111_0000,MMTEMPTYWALL16
+    equb %1000_0000,MMTEMPTYWALL16
+    equb %0000_1000,MMTEMPTYFLOOR8
+    equb %0000_0111,MMTEMPTYFLOOR8
+    equb $ff
+    equb $ff
+    ; entities
+    equb %1001_1110,16
+    equb %1010_1110,16
+    equb %1011_1110,16
+    equb $ff
+  .Screen4_3
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -916,7 +770,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen9
+  .Screen4_4
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -928,7 +782,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen10
+  .Screen4_5
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -940,7 +794,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen11
+  .Screen4_6
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -952,7 +806,53 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen12
+  .Screen4_7
+    equb 0+DEFAULTSCREENSHAFTH ; palette/defaultlayout
+    equb %0000_0000 ; npc string/tabletstring
+    ;tile structures
+    equb %0000_1001,MMTBRICKFLOOR16
+    equb %0000_1001,MMTBRICKFLOOR16
+    equb %0000_1001,MMTBRICKFLOOR16
+    equb %0000_1001,MMTBRICKFLOOR16
+    equb %0000_1001,MMTBRICKFLOOR16
+    equb $ff
+    ; entities
+    equb $ff
+  .Screen4_8
+    equb 0+%0000_0010 ; palette/defaultlayout
+    equb %0000_0000 ; npc string/tabletstring
+    ;tile structures
+    equb %0001_1010,MMTSOLIDFLOOR2
+    equb %1101_1010,MMTSOLIDFLOOR2
+    equb %0001_1011,MMTSOLIDFLOOR4
+    equb %1011_1011,MMTSOLIDFLOOR4
+    equb %0000_1100,MMTBRICKFLOOR16
+    equb %0000_1111,MMTBRICKFLOOR16
+    equb $ff
+    ; entities
+    ; equb %0000_1011,128 + ENTITY 
+    equb $ff
+  .Screen5_1
+    equb 0+DEFAULTSCREENCORRIDORV ; palette/defaultlayout
+    equb %0000_0000 ; npc string/tabletstring
+    ;tile structures
+    equb %0000_1000,MMTEMPTYFLOOR8
+    equb %0000_0111,MMTEMPTYFLOOR8
+
+    equb $ff
+    ;entities
+    equb $ff
+
+  .Screen5_2
+    equb %0000_0100 ; palette/defaultlayout
+    equb %0000_0000 ; npc string/tabletstring
+    ;tile structures
+    ; equb %0000_1110,20
+    ; equb %0110_0000,3
+    equb %0111_0000,3
+    equb %1000_0000,3
+    equb %0000_1110,19
+  .Screen5_3
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -964,7 +864,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen13
+  .Screen5_4
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -976,7 +876,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen14
+  .Screen5_5
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -988,7 +888,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen15
+  .Screen5_6
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -1000,7 +900,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen16
+  .Screen5_7
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -1012,7 +912,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen17
+  .Screen5_8
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -1024,7 +924,45 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen18  
+  .Screen6_1
+    equb 0+DEFAULTSCREENCORRIDORV ; palette/defaultlayout
+    equb %0000_0000 ; npc string/tabletstring
+    ;tile structures
+    equb %0011_0100,MMTEMPTYFLOOR8
+    equb %0110_0111,MMTEMPTYFLOOR4
+    equb %0101_1010,MMTEMPTYFLOOR8
+    equb %0111_1101,MMTEMPTYFLOOR4
+    equb $ff
+    ;entities
+    equb %1000_0100,ENTITYHBOUNCER
+    equb %1000_0111,ENTITYHBOUNCER
+    equb %1000_1010,ENTITYHBOUNCER
+    equb $ff
+  .Screen6_2
+    equb %0000_0001 ; palette/defaultlayout
+    equb %0000_0000 ; npc string/tabletstring
+    ;tile structures
+    equb %0000_1001,MMTSOLIDFLOOR4
+    equb %1100_1001,MMTSOLIDFLOOR4
+    equb $ff
+    ; entities
+    equb %0110_1001,ENTITYBOUNCER
+    equb %1001_1001,ENTITYBOUNCER
+
+    equb $ff
+  .Screen6_3
+    equb %0000_0010 ; palette/defaultlayout
+    equb %0000_0000 ; npc string/tabletstring
+    ;tile structures
+    equb %0100_1100,22
+    equb %0110_1100,22
+    equb $ff
+    ; entities
+    equb %1001_1110,16
+    equb %1010_1110,16
+    equb %1011_1110,16
+    equb $ff
+  .Screen6_4
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -1036,7 +974,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen19
+  .Screen6_5
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -1048,7 +986,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen20
+  .Screen6_6
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -1060,7 +998,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen21
+  .Screen6_7
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -1072,7 +1010,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen22
+  .Screen6_8
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -1084,7 +1022,16 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen23
+  .Screen7_1
+    equb 0+DEFAULTSCREENCORRIDORH ; palette/defaultlayout
+    equb %0000_0000 ; npc string/tabletstring
+    ;tile structures
+    equb %1000_0000,MMTEMPTYWALL8
+    equb %0111_0000,MMTEMPTYWALL8
+    equb $ff
+    ;entities
+    equb $ff
+  .Screen7_2
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -1096,7 +1043,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen24
+  .Screen7_3
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -1108,7 +1055,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen25
+  .Screen7_4
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -1120,7 +1067,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen26
+  .Screen7_5
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -1132,7 +1079,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen27
+  .Screen7_6
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -1144,7 +1091,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen28
+  .Screen7_7
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -1156,7 +1103,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen29
+  .Screen7_8
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -1168,7 +1115,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen30
+  .Screen8_1
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -1180,7 +1127,25 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen31
+  .Screen8_2
+    equb 0 + DEFAULTSCREENCORRIDORH ; palette/defaultlayout
+    equb %0000_0000 ; npc string/tabletstring
+    ;tile structures
+    equb %0111_0000,MMTEMPTYWALL16
+    equb %1000_0000,MMTEMPTYWALL16
+    equb %0010_0011,MMTEMPTYFLOOR5
+    equb %1001_0011,MMTEMPTYFLOOR5
+    equb %0010_1100,MMTEMPTYFLOOR5
+    equb %1001_1100,MMTEMPTYFLOOR5
+    equb %0010_0011,MMTEMPTYWALL4
+    equb %0010_1001,MMTEMPTYWALL4
+    equb %1101_0011,MMTEMPTYWALL4
+    equb %1101_1001,MMTEMPTYWALL4
+
+    equb $ff
+    ; entities
+    equb $ff
+  .Screen8_3
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -1192,7 +1157,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen32
+  .Screen8_4
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -1204,7 +1169,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen33
+  .Screen8_5
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -1216,7 +1181,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen34
+  .Screen8_6
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -1228,7 +1193,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen35
+  .Screen8_7
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -1240,331 +1205,7 @@ align $08
     equb %1010_1110,16
     equb %1011_1110,16
     equb $ff
-  .Screen36
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen37
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen38
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen39
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen40
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen41
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen42
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen43
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen44
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen45
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen46
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen47
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen48
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen49
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen50
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen51
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen52
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen53
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen54
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen55
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen56
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen57
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen58
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen59
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen60
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen61
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen62
-    equb %0000_0010 ; palette/defaultlayout
-    equb %0000_0000 ; npc string/tabletstring
-    ;tile structures
-    equb %0010_1100,22
-    equb %1010_1100,22
-    equb $ff
-    ; entities
-    equb %1001_1110,16
-    equb %1010_1110,16
-    equb %1011_1110,16
-    equb $ff
-  .Screen63
+  .Screen8_8
     equb %0000_0010 ; palette/defaultlayout
     equb %0000_0000 ; npc string/tabletstring
     ;tile structures
@@ -1585,357 +1226,232 @@ align $08
 
 .MetaTileDrawOffsetsHi
   equb $00,$01,$00
-.ActionSetsLo
-  equb <ActionSetOnFloor
-  equb <ActionSetJumping
-  equb <ActionSetWallSliding
-  equb <ActionSetDiving
-  equb <ActionSetSliding
-.ActionSetsHi
-  equb >ActionSetOnFloor
-  equb >ActionSetJumping
-  equb >ActionSetWallSliding
-  equb >ActionSetDiving
-  equb >ActionSetSliding
-
 .ActionSetOnFloor
   ;w a s d k l p RT
-  equb 8,ACTIONMOVELEFT,NOACTION,ACTIONMOVERIGHT,ACTIONJUMP,NOACTION,NOACTION,ACTIONVIEWMEM
+  equb NOACTION,ACTIONMOVELEFT,ACTIONENTERCROUCH,ACTIONMOVERIGHT,ACTIONJUMP,ACTIONDIVE,NOACTION,ACTIONVIEWMEM
 .ActionSetJumping
-  equb 8,ACTIONMOVELEFT,NOACTION,ACTIONMOVERIGHT,ACTIONDIVE,NOACTION,NOACTION,ACTIONVIEWMEM
+  equb NOACTION,ACTIONMOVELEFT,NOACTION,ACTIONMOVERIGHT,NOACTION,ACTIONDIVE,NOACTION,ACTIONVIEWMEM
 .ActionSetWallSliding
-  equb 8,NOACTION,NOACTION,NOACTION,ACTIONWALLJUMP,NOACTION,NOACTION,ACTIONVIEWMEM
+  equb NOACTION,NOACTION,NOACTION,NOACTION,ACTIONWALLJUMP,NOACTION,NOACTION,ACTIONVIEWMEM
 .ActionSetDiving
-  equb 8,NOACTION,NOACTION,NOACTION,NOACTION,NOACTION,NOACTION,ACTIONVIEWMEM
+  equb NOACTION,NOACTION,NOACTION,NOACTION,NOACTION,NOACTION,NOACTION,ACTIONVIEWMEM
 .ActionSetSliding 
-  equb 8,NOACTION,NOACTION,NOACTION,ACTIONJUMP,NOACTION,NOACTION,ACTIONVIEWMEM
+  equb NOACTION,NOACTION,NOACTION,NOACTION,ACTIONJUMP,NOACTION,NOACTION,ACTIONVIEWMEM
+.ActionSetCrouching 
+  equb NOACTION,NOACTION,NOACTION,NOACTION,ACTIONLONGJUMP,NOACTION,NOACTION,NOACTION
 
-
-.AnimationControlBytesLo
-  equb <AniLoop-1
-  equb <AniNewAnimation-1
-  equb <AniDestroyEntity-1
-  equb <AniSetSpeed-1
-  equb <AniFlip-1
-
-.AnimationControlBytesHi
-  equb >AniLoop
-  equb >AniNewAnimation
-  equb >AniDestroyEntity
-  equb >AniSetSpeed
-  equb >AniFlip
 
 .Mult8Table
   equb $00,$08,$10,$18,$20,$28,$30,$38,$40,$48,$50,$58,$60,$68,$70,$78,$80,$88,$90,$98,$a0,$a8,$b0,$b8,$c0,$c8,$d0,$d8,$e0,$e8,$f0,$f8
   equb $00,$08,$10,$18,$20,$28,$30,$38,$40,$48,$50,$58,$60,$68,$70,$78,$80,$88,$90,$98,$a0,$a8,$b0,$b8,$c0,$c8,$d0,$d8,$e0,$e8,$f0,$f8
 
-
-
-
-
-
-
-
-  .StringListLo
-  equb <DeathMessage1
-  equb <DeathMessage2
-  equb <DeathMessage3
-  equb <DeathMessage4
-  equb <DeathMessage5
-  equb <DeathMessage6
-  equb <DeathMessage7
-  equb <DeathMessage8
-  equb <StringTitle
-  equb <StringNPC1
-.StringListHi
-  equb >DeathMessage1
-  equb >DeathMessage2
-  equb >DeathMessage3
-  equb >DeathMessage4
-  equb >DeathMessage5
-  equb >DeathMessage6
-  equb >DeathMessage7
-  equb >DeathMessage8
-  equb >StringTitle
-
-
-.MMTFloor16Earth
-  equb 16,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23
+.mmtfBrickWallL
+  equb 1,29
+  equb 1,29
+  equb 1,29
+  equb 1,29
+  equb 1,29
+  equb 1,29
+  equb 1,29
+  equb 1,29
+  equb 1,29
+  equb 1,29
+  equb 1,29
+  equb 1,29
+  equb 1,29
+  equb 1,29
+  equb 1,29
+  equb 1,29
   equb $ff
-.MMTFloor16Solid
-  equb 16,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-  equb $ff
-.MMTFloor14Earth
-  equb 14,23,23,23,23,23,23,23,23,23,23,23,23,23,23
-  equb $ff
-.MMTFloor14Solid
-  equb 14,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-  equb $ff
-.MMTFloor12Earth
-  equb 12,23,23,23,23,23,23,23,23,23,23,23,23
-  equb $ff
-.MMTFloor12Solid
-  equb 12,1,1,1,1,1,1,1,1,1,1,1,1
-  equb $ff
-.MMTFloor10Earth
-  equb 10,23,23,23,23,23,23,23,23,23,23
-  equb $ff
-.MMTFloor10Solid
-  equb 10,1,1,1,1,1,1,1,1,1,1
-  equb $ff
-.MMTFloor8Earth
-  equb 8,23,23,23,23,23,23,23,23
-  equb $ff
-.MMTFloor8Solid
-  equb 8,1,1,1,1,1,1,1,1
-  equb $ff
-.MMTFloor6Earth
-  equb 6,23,23,23,23,23,23
-  equb $ff
-.MMTFloor6Solid
-  equb 6,1,1,1,1,1,1
-  equb $ff
-.MMTFloor4Earth
-  equb 4,23,23,23,23
-  equb $ff
-.MMTFloor4Solid
-  equb 4,1,1,1,1
-  equb $ff
-.MMTFloor2Earth
-  equb 2,23,23
-  equb $ff
-.MMTFloor2Solid
-  equb 2,1,1
-  equb $ff
-.MMTFWallSolid16
-  equb 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-.MMTFWallEarthLeft16
-  equb 1,25,1,25,1,25,1,25,1,25,1,25,1,25,1,25,1,25,1,25,1,25,1,25,1,25,1,25,1,25,1,25
-  equb $ff
-.MMTFWallEarthRight16
-  equb 1,26,1,26,1,26,1,26,1,26,1,26,1,26,1,26,1,26,1,26,1,26,1,26,1,26,1,26,1,26,1,26
-  equb $ff
-.MMTFCeilingEarth16
-  equb 16,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24,24
+.mmtfBrickWallR
+  equb 1,30
+  equb 1,30
+  equb 1,30
+  equb 1,30
+  equb 1,30
+  equb 1,30
+  equb 1,30
+  equb 1,30
+  equb 1,30
+  equb 1,30
+  equb 1,30
+  equb 1,30
+  equb 1,30
+  equb 1,30
+  equb 1,30
+  equb 1,30
   equb $ff
 
-.MMTSolid1x1
+.mmtfBlankWall1
+  equb 1,0
+  equb $ff
+.mmtfBlankWall2
+  equb 1,0
+  equb 1,0
+  equb $ff
+.mmtfBlankWall4
+  equb 1,0
+  equb 1,0
+  equb 1,0
+  equb 1,0
+  equb $ff
+.mmtfBlankWall8
+  equb 1,0
+  equb 1,0
+  equb 1,0
+  equb 1,0
+  equb 1,0
+  equb 1,0
+  equb 1,0
+  equb 1,0
+  equb $ff
+
+.mmtfBlankWall16
+  equb 1,0
+  equb 1,0 
+  equb 1,0
+  equb 1,0
+  equb 1,0
+  equb 1,0 
+  equb 1,0
+  equb 1,0
+  equb 1,0
+  equb 1,0 
+  equb 1,0
+  equb 1,0
+  equb 1,0
+  equb 1,0 
+  equb 1,0
+  equb 1,0
+  equb $ff
+
+.mmtfFlatWall2
+  equb 1,1
   equb 1,1
   equb $ff
-.MMTRounded1x1
-  equb 1,19
+.mmtfFlatWall4
+  equb 1,1
+  equb 1,1
+  equb 1,1
+  equb 1,1
   equb $ff
-.MMTRounded1x3
-  equb 3,20,22,21
+.mmtfFlatWall8
+  equb 1,1
+  equb 1,1
+  equb 1,1
+  equb 1,1
+  equb 1,1
+  equb 1,1
+  equb 1,1
+  equb 1,1
   equb $ff
-.MMTHPlatforms
-  equb 12,0,0,1,0,0,1,1,0,0,1,0,0
+.mmtfFlatWall16
+  equb 1,1
+  equb 1,1
+  equb 1,1
+  equb 1,1
+  equb 1,1
+  equb 1,1
+  equb 1,1
+  equb 1,1
+  equb 1,1
+  equb 1,1
+  equb 1,1
+  equb 1,1
+  equb 1,1
+  equb 1,1
+  equb 1,1
+  equb 1,1
   equb $ff
-.MMTBrickDownFace1x16
-  equb 16,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28
+.mmtfFlatFloor1
+  equb 1,1
   equb $ff
-.MMTBrickUpFace1x16
+.mmtfFlatFloor2
+  equb 2,1,1
+  equb $ff
+.mmtfFlatFloor4
+  equb 4,1,1,1,1
+  equb $ff
+.mmtfFlatFloor8
+  equb 8,1,1,1,1,1,1,1,1
+  equb $ff
+.mmtfFlatFloor16
+  equb 16,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+  equb $ff
+.mmtfBrickFloor16
   equb 16,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27
   equb $ff
-.MMTBrickRightFace1x16
-  equb 1,29
-  equb 1,29
-  equb 1,29
-  equb 1,29
-  equb 1,29
-  equb 1,29
-  equb 1,29
-  equb 1,29
-  equb 1,29
-  equb 1,29
-  equb 1,29
-  equb 1,29
-  equb 1,29
-  equb 1,29
-  equb 1,29
-  equb 1,29
+.mmtfEarthFloor16
+  equb 16,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23
   equb $ff
-.MMTBrickLeftFace1x16
-  equb 1,30
-  equb 1,30
-  equb 1,30
-  equb 1,30
-  equb 1,30
-  equb 1,30
-  equb 1,30
-  equb 1,30
-  equb 1,30
-  equb 1,30
-  equb 1,30
-  equb 1,30
-  equb 1,30
-  equb 1,30
-  equb 1,30
-  equb 1,30
+.mmtfBlankFloor1
+  equb 1,0
   equb $ff
+.mmtfBlankFloor2
+  equb 2,0,0
+  equb $ff
+.mmtfBlankFloor4
+  equb 4,0,0,0,0
+  equb $ff
+.mmtfBlankFloor5
+  equb 5,0,0,0,0,0
+  equb $ff
+.mmtfBlankFloor8
+  equb 8,0,0,0,0,0,0,0,0
+  equb $ff
+.mmtfBlankFloor16
+  equb 16,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+  equb $ff
+.mmtStepTopL
+  equb 2,12,1
+  equb $ff
+.mmtStepTopR
+  equb 2,1,12
+  equb $ff
+.mmtfConveyerLeft16
+  equb 16,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31,31
+  equb $ff
+.mmtfConveyerRight16
+  equb 16,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32
+  equb $ff
+.mmtfConveyerLeft8
+  equb 8,31,31,31,31,31,31,31,31
+  equb $ff
+.mmtfConveyerRight8
+  equb 8,32,32,32,32,32,32,32,32
+  equb $ff
+.mmtfConveyerLeft4
+  equb 4,31,31,31,31
+  equb $ff
+.mmtfConveyerRight4
+  equb 4,32,32,32,32
+  equb $ff
+.mmtfConveyerLeft2
+  equb 2,31,31
+  equb $ff
+.mmtfConveyerRight2
+  equb 2,32,32
+  equb $ff
+.mmtfBounce1
+  equb 1,16
+  equb $ff
+.mmtfBounce2
+  equb 2,16,16
+  equb $ff
+.mmtfBrickCeiling16
+  equb 16,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28
+  equb $ff
+.MMTFloor16Earth
 
-; .MMTFloor16
-;   equb 16,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23,23
-;   equb $ff
-; .MMTFloor14
-;   equb 14,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-;   equb $ff
-; .MMTFloor12
-;   equb 12,1,1,1,1,1,1,1,1,1,1,1,1
-;   equb $ff
-; .MMTFloor10
-;   equb 10,1,1,1,1,1,1,1,1,1,1
-;   equb $ff
-; .MMTFloor8
-;   equb 8,1,1,1,1,1,1,1,1
-;   equb $ff
-; .MMTFloor6
-;   equb 6,1,1,1,1,1,1
-;   equb $ff
-; .MMTFloor4
-;   equb 4,1,1,1,1
-;   equb $ff
-; .MMTFloor3
-;   equb 3,1,1,1
-;   equb $ff
-; .MMTFloor2  
-;   equb 2,1,1
-;   equb $ff
-; .MMTFloor1
-;   equb 1,1
-;   equb $ff
-; .MMTWall16
-;   equb 1,25
-;   equb 1,25
-;   equb 1,25
-;   equb 1,25
-;   equb 1,25
-;   equb 1,25
-;   equb 1,25
-;   equb 1,25
-;   equb 1,25
-;   equb 1,25
-;   equb 1,25
-;   equb 1,25
-;   equb 1,25
-;   equb 1,25
-;   equb 1,25
-;   equb 1,25
-;   equb $ff
-; .MMTWall14
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb $ff
-; .MMTWall12
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb $ff
-; .MMTWall10
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb $ff
-; .MMTWall8
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb $ff
-; .MMTWall6
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb $ff
-; .MMTWall4
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb $ff
-; .MMTWall3
-;   equb 1,1
-;   equb 1,1
-;   equb 1,1
-;   equb $ff
-; .MMTWall2
-;   equb 1,1
-;   equb 1,1
-;   equb $ff
+.ExitPositionslo
+  equb $00,$20,$10,$90
+.ExitPositionshi
+  equb $7c,$7b,$7e,$58
 
-; .MMTHalfFloor1_1
-;   equb 1,12
-;   equb $ff
-; .MMTHalfFloor1_2
-;   equb 2,12,12
-;   equb $ff
-; .MMTHalfFloor1_3
-;   equb 3,12,12,12
-;   equb $ff
-; .MMTHalfFloor1_4
-;   equb 4,12,12,12,12
-;   equb $ff
+.TextWorldLocations
+  equb %00000000
 
-; .MMTHalfFloor2_1
-;   equb 1,13
-;   equb $ff
-; .MMTHalfFloor2_2
-;   equb 2,13,13
-;   equb $ff
-; .MMTHalfFloor2_3
-;   equb 3,13,13,13
-;   equb $ff
-; .MMTHalfFloor2_4
-;   equb 4,13,13,13,13
-;   equb $ff
-; .MMTBouncePad
-;   equb 2,16,16
-;   equb $ff
-; .MMTBridge
-;   equb 4,17,13,13,18
-;   equb $ff
-; .MMTBridge2
-;   equb 5,17,13,13,13,18
-;   equb $ff
-; .MMTBridge3
-;   equb 6,17,13,13,13,13,18
-;   equb $ff
-
+.TextWorldStrings
 
 .DictionaryStringThe
   equs " the "
@@ -1946,38 +1462,68 @@ align $08
 .DictionaryStringIt
   equs " it "
   equb $00
+.DictionaryStringGoodSquaresPress
+  equs "Good squares press "
+  equb $00
+.DictionaryStringAnd
+  equs " and "
+  equb $00
+.DictionaryStringTo
+  equs " to "
+  equb $00
+; be safe, I love you
+; I hate you, be safe
 
 .DeathMessage1
-  equs "Loser"
+  equs "You died"
+
+.StringTutorial1
+  equb DICTIONARY_GOODSQUARESPRESS
+  equs "K"
+  equb DICTIONARY_TO
+  equs "JUMP"
   equb $00
-.DeathMessage2
-  equs "T*****"
+.StringTutorial2
+  equb DICTIONARY_GOODSQUARESPRESS
+  equs "L"
+  equb DICTIONARY_TO
+  equs "DIVE"
   equb $00
-.DeathMessage3
-  equs "T******"
+.StringTutorial3
+  equb DICTIONARY_GOODSQUARESPRESS
+  equs "A"
+  equb DICTIONARY_AND
+  equs "D"
+  equb DICTIONARY_TO
+  equs "MOVE"
   equb $00
-.DeathMessage4
-  equs "Failure"
+.StringTutorial4
+  equb DICTIONARY_GOODSQUARESPRESS
+  equs "S"
+  equb DICTIONARY_AND
+  equs "K"
+  equb DICTIONARY_TO
+  equs "LONGJUMP"
   equb $00
-.DeathMessage5
-  equs "F*****"
-  equb $00
-.DeathMessage6
-  equs "#$*#"
-  equb $00
-.DeathMessage7
-  equs "C***"
-  equb $00
-.DeathMessage8
-  equs "Pathetic"
+.StringTutorial5
+  equs "Good circles #$£%"
+  equb DICTIONARY_AND
+  equb "$#**"
+  equb DICTIONARY_TO
+  equs "LIVE"
   equb $00
 .StringTitle
-  equs "Title Screen: Press K to Start :)"
+  equb DICTIONARY_GOODSQUARESPRESS
+  equs "K"
+  equb DICTIONARY_TO
+  equs "Start"
   equb $00
 
 
-.StringNPC1
-  equs "I wished, I begged in that moment, that someone would take my hand, ease those fears from the recesses of my darkling mind. Yet I remained alone, diminished, afraid."
-  equb $00
-.StringNPC2
-  equs "Why am I here? Why the same reason as you I imagine. To find myself, or perhaps... to be found. Hehehe."
+
+; Good squares press K to JUMP
+; Good squares press L to DIVE
+; Good squares press S and K to LONGJUMP
+; Good squares press A and D to MOVE
+; Good Circles #$£% and $#** to LIVE
+; 
